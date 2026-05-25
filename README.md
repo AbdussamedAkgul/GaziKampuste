@@ -54,8 +54,8 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 1. **Projeyi Klonlayın**:
    ```bash
-   git clone https://github.com/AbdussamedAkgul/GaziMobil.git
-   cd GaziMobil
+   git clone https://github.com/AbdussamedAkgul/GaziKampuste.git
+   cd GaziKampuste
    ```
 
 2. **Sanal Ortam Oluşturun ve Aktifleştirin**:
@@ -77,7 +77,7 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 4. **Çevre Değişkenlerini Ayarlayın**:
    `.env.example` dosyasının adını `.env` olarak değiştirin veya kopyalayın, ardından içeriğini projenize göre düzenleyin:
    ```text
-   SECRET_KEY=gazi-mobil-guvenli-anahtar-1234
+   SECRET_KEY=gazi-kampuste-guvenli-anahtar-1234
    DATABASE_URL=sqlite:///app.db
    FLASK_APP=run.py
    FLASK_DEBUG=1

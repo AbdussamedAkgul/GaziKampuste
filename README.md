@@ -1,6 +1,6 @@
-# Gazi Web Yönetim Sistemi
+# GaziKampüste
 
-Bu proje, **Gazi Üniversitesi TUSAŞ Kazan Meslek Yüksekokulu İnternet Programcılığı** dersi dönem projesi kapsamında geliştirilen bir web uygulamasıdır. Sistem; öğrencilerin yemekhane menüleri, ders programları ve duyurulara erişebileceği bir platformun yönetim ve bilgi panelini oluşturur.
+Bu proje, **Gazi Üniversitesi TUSAŞ Kazan Meslek Yüksekokulu İnternet Programcılığı** dersi dönem projesi kapsamında geliştirilen bir web uygulamasıdır. Sistem; öğrencilerin yemekhane menüleri, ders programları ve duyurulara erişebileceği bir platformun yönetim ve bilgi panelini (GaziKampüste Yönetim Sistemi) oluşturur.
 
 ## 🚀 Proje Mimarisi: Application Factory Pattern & Blueprints
 
@@ -21,6 +21,8 @@ app/
   templates/
     base.html        # Jinja2 ana HTML şablonu
   static/            # CSS, JS ve görsel dosyaları
+docs/
+  yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)
 migrations/          # Flask-Migrate veritabanı göç dosyaları
 tests/               # Birim ve entegrasyon testleri
 config.py            # Uygulama yapılandırma parametreleri
@@ -52,8 +54,8 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 1. **Projeyi Klonlayın**:
    ```bash
-   git clone https://github.com/AbdussamedAkgul/gazi-mobil.git
-   cd gazi-mobil
+   git clone https://github.com/AbdussamedAkgul/GaziMobil.git
+   cd GaziMobil
    ```
 
 2. **Sanal Ortam Oluşturun ve Aktifleştirin**:

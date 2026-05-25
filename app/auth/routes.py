@@ -3,4 +3,4 @@ from app.auth import auth
 
 @auth.route('/login')
 def login():
-    return "Gazi Mobil Yönetim Sistemi - Giriş Sayfası (Auth Blueprint)"
+    return "GaziKampüste Yönetim Sistemi - Giriş Sayfası (Auth Blueprint)"

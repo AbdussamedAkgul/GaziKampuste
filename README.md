@@ -23,6 +23,7 @@ app/
   static/            # CSS, JS ve görsel dosyaları
 docs/
   yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)
+  proje_raporu.md       # Proje Raporu (Project Report)
 migrations/          # Flask-Migrate veritabanı göç dosyaları
 tests/               # Birim ve entegrasyon testleri
 config.py            # Uygulama yapılandırma parametreleri

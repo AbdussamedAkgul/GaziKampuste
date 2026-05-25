@@ -1,0 +1,20 @@
+# Sanal ortam
+venv/
+.venv/
+env/
+
+# Python önbellek
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Çevre değişkenleri
+.env
+
+# Veritabanı
+*.db
+*.sqlite
+
+# IDE ayarları
+.vscode/
+.idea/

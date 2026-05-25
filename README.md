@@ -1,4 +1,4 @@
-# Gazi Mobil Yönetim Sistemi
+# Gazi Web Yönetim Sistemi
 
 Bu proje, **Gazi Üniversitesi TUSAŞ Kazan Meslek Yüksekokulu İnternet Programcılığı** dersi dönem projesi kapsamında geliştirilen bir web uygulamasıdır. Sistem; öğrencilerin yemekhane menüleri, ders programları ve duyurulara erişebileceği bir platformun yönetim ve bilgi panelini oluşturur.
 

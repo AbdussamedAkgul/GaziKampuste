@@ -4,7 +4,7 @@ from sqlalchemy import String, Text, ForeignKey, Date
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
+from app import db, login
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -64,3 +64,8 @@ class Announcement(db.Model):
 
     def __repr__(self) -> str:
         return f'<Announcement {self.title}>'
+
+
+@login.user_loader
+def load_user(user_id: str) -> Optional[User]:
+    return db.session.get(User, int(user_id))

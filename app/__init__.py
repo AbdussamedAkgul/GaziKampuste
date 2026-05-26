@@ -16,6 +16,9 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
 
+    # Modellerin ve user_loader'ın yüklenmesi
+    from app import models
+
     # Blueprint'lerin kaydedilmesi
     from app.main import main as main_blueprint
     app.register_blueprint(main_blueprint)

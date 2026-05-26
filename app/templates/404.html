@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Sayfa Bulunamadı - GaziKampuste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px 20px;">
+    <h2 style="font-size: 72px; color: #dc3545; margin: 0;">404</h2>
+    <h3 style="font-size: 24px; color: #333; margin-top: 10px;">Aradığınız Sayfa Bulunamadı</h3>
+    <p style="color: #666; max-width: 500px; margin: 20px auto;">
+        Gitmek istediğiniz sayfa silinmiş, adı değiştirilmiş veya geçici olarak kullanım dışı olabilir.
+    </p>
+    <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 10px;">
+        Ana Sayfaya Dön
+    </a>
+</div>
+{% endblock %}

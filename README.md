@@ -16,12 +16,18 @@ app/
     routes.py        # Ana sayfa ve genel rota tanımlamaları
   auth/
     __init__.py      # Auth Blueprint tanımlaması
-    routes.py        # Giriş/çıkış ve kimlik doğrulama rotaları
-  models.py          # Veritabanı modelleri (SQLAlchemy)
+    forms.py         # Giriş, Kayıt ve Şifre Sıfırlama WTForms tanımları
+    routes.py        # Giriş/çıkış, kayıt ve şifre sıfırlama rotaları
+  models.py          # Veritabanı modelleri (SQLAlchemy 2.0)
   templates/
-    base.html        # Jinja2 ana HTML şablonu
+    base.html        # Jinja2 ana HTML şablonu (Bootstrap 5 & Flash Mesajları)
     404.html         # Sayfa Bulunamadı hata şablonu
     500.html         # Beklenmedik sunucu hatası şablonu
+    auth/            # Kimlik doğrulama arayüz şablonları
+      login.html
+      register.html
+      reset_password_request.html
+      reset_password.html
   static/            # CSS, JS ve görsel dosyaları
 docs/
   yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)
@@ -42,11 +48,18 @@ run.py               # Uygulamayı başlatan ana giriş noktası
 
 Uygulamada kullanılan veritabanı şeması ve modelleri **SQLAlchemy 2.0** standartlarında (`Mapped` ve `mapped_column`) [app/models.py](file:///c:/Users/AKGUL/Desktop/Abd%C3%BCssamed/Gazi%20Ders/GaziMobilFinalEdizHoca/app/models.py) içinde tanımlanmıştır:
 
-1. **User (Kullanıcı)**: Kullanıcı bilgilerini (öğrenci, editör, yönetici rolleriyle) saklar. Şifre güvenliği `werkzeug.security` (`set_password`/`check_password`) ile gerçekleştirilir. `Flask-Login` uyumludur.
+1. **User (Kullanıcı)**: Kullanıcı bilgilerini (öğrenci, editör, yönetici rolleriyle) saklar. Şifre güvenliği `werkzeug.security` (`set_password`/`check_password`) ile gerçekleştirilir. `Flask-Login` uyumludur. E-posta şifre sıfırlama akışı için `itsdangerous` ile süreli token entegrasyonuna sahiptir.
 2. **CafeteriaMenu (Yemekhane Menüsü)**: Günlük yemek listelerini tutar. Aynı gün için hem normal hem de vejetaryen menü girişini destekler.
 3. **Announcement (Duyuru)**: Kampüs ve yüksekokul duyurularını saklar.
 
 *Modeller arasındaki Bire-Çok (One-to-Many) ilişkiler kurulmuş ve ilişkili silme işlemleri (`cascade="all, delete-orphan"`) yapılandırılmıştır.*
+
+---
+
+## 🔐 Kimlik Doğrulama & Güvenlik
+* **Şifre Hashleme:** Şifreler veritabanına asla düz metin olarak yazılmaz; `werkzeug.security` ile SHA-256 tabanlı güvenli bir biçimde hashlenir.
+* **Form Doğrulama & CSRF:** Tüm formlarda CSRF koruması aktiftir. Formlarda kullanıcı adı regex doğrulaması (sadece harf, rakam, `.`, `_`) ve e-posta biçim kontrolleri yapılmaktadır.
+* **Şifre Sıfırlama:** E-posta ile şifre sıfırlama özelliği entegredir. E-postadaki bağlantı 10 dakika geçerli olup, yerel testlerde çıktıları konsola yansıtan mock bir e-posta yapısı kullanılır.
 
 ---
 
@@ -60,6 +73,7 @@ Projede sadece aşağıda belirtilen temel kütüphaneler kullanılmıştır:
 * **Flask-WTF**: Güvenli form işlemleri ve CSRF koruması
 * **python-dotenv**: `.env` dosyasındaki çevre değişkenlerinin yönetimi
 * **SQLite**: Hafif ve taşınabilir yerel veritabanı
+
 
 ---
 

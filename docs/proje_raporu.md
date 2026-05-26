@@ -140,17 +140,35 @@ Veritabanı tasarımı, modern **SQLAlchemy 2.0** (Mapped, mapped_column) standa
 
 ---
 
-## 🔮 6. Gelecek Geliştirme Adımları
+## 🔐 6. Kimlik Doğrulama ve Güvenlik Akışları
 
-Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan işler sırasıyla şunlardır:
-1. **Şablon Tasarımları (Frontend):** Modern, mobil uyumlu (responsive) ve Gazi Üniversitesi renk temasına uygun bir kullanıcı arayüzü (UI) geliştirilmesi.
-2. **Kullanıcı Giriş Sistemi Aktivasyonu:** `Flask-Login` kullanılarak şifre hashleme (`werkzeug.security`) mekanizmasıyla giriş/çıkış işlemlerinin tamamlanması.
-3. **Yönetim Paneli (Admin Panel):** Yönetici ve editörlerin veritabanına yeni yemek listesi, duyuru ve ders programı ekleyebileceği formların ve tabloların oluşturulması.
+Projenin 3. oturumunda, güvenli ve tam fonksiyonel bir kullanıcı yönetim sistemi devreye alınmıştır. Bu sistem kapsamında aşağıdaki mekanizmalar uygulanmıştır:
 
-*(Not: Hata Sayfaları (Error Handling) bu oturumda tamamlanmış, 404 ve 500 hata durumları şablonlarıyla birlikte sisteme entegre edilmiştir.)*
+### 🔑 Şifre Güvenliği ve Hashleme
+Kullanıcı şifreleri veritabanına asla düz metin (plain text) olarak kaydedilmez. `User` modeli üzerinde `werkzeug.security` kütüphanesinin `generate_password_hash` ve `check_password_hash` metotları kullanılarak şifreler SHA-256 algoritmasıyla güvenli bir şekilde hashlenir ve doğrulanır.
+
+### 🛡️ CSRF ve Form Güvenliği
+Flask-WTF ve WTForms kütüphaneleri kullanılarak geliştirilen tüm form yapılarında (`RegisterForm`, `LoginForm`, `ResetPasswordRequestForm`, `ResetPasswordForm`) CSRF (Cross-Site Request Forgery) koruması (`form.hidden_tag()`) zorunlu kılınmıştır. Formlara ayrıca e-posta doğrulaması, kullanıcı adı regex kısıtlamaları (sadece harf, rakam, alt çizgi ve nokta) ve veritabanı düzeyinde benzersizlik (unique) doğrulayıcıları eklenmiştir.
+
+### 📧 E-Posta ile Şifre Sıfırlama (Bonus Özellik)
+Kullanıcıların şifrelerini unutmaları durumunda e-posta adreslerine güvenli bir sıfırlama bağlantısı gönderilir.
+* **Token Güvenliği:** `itsdangerous.URLSafeTimedSerializer` kullanılarak her sıfırlama talebi için kullanıcının ID'sini içeren ve 10 dakika geçerliliği olan imzalı, güvenli bir token üretilir.
+* **Mock Servisi:** Yerel testlerin kolay yapılabilmesi için gerçek bir SMTP sunucusu yerine, gönderilen e-postanın içeriğini ve sıfırlama bağlantısını doğrudan terminal konsoluna yazdıran bir mock e-posta gönderim yapısı kurulmuştur.
+
+### 🎨 Glassmorphic Kullanıcı Arayüzü
+Giriş, kayıt olma ve şifre sıfırlama sayfaları Bootstrap 5 şablon standartlarına uygun şekilde tasarlanmış ve projenin genel dark-glassmorphism temasına entegre edilmiştir. Ayrıca `base.html` üzerinden kapatılabilir Türkçe flash mesaj bildirim kutuları eklenmiştir.
 
 ---
 
-## 📈 7. Sonuç ve Değerlendirme
+## 🔮 7. Gelecek Geliştirme Adımları
 
-**GaziKampüste Yönetim Sistemi**, modern web geliştirme standartlarına uygun olarak tasarlanmış bir altyapıya sahiptir. Application Factory Pattern ve modüler Blueprint tasarımı sayesinde proje büyüdükçe kod karmaşasının önüne geçilecek, yeni özellikler sisteme çok kolay bir şekilde entegre edilebilecektir.
+Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan işler şunlardır:
+1. **Yönetim Paneli (Admin Panel) Geliştirilmesi:** Yetkilendirilmiş editör ve yöneticilerin veritabanına yeni yemekhane menüsü, duyuru ekleyebilmeleri için CRUD formlarının ve yönetim arayüzünün tamamlanması.
+2. **Ders Programı Modülü (ClassSchedule):** Öğrencilerin ve akademik personelin haftalık ders programlarını görebileceği veritabanı tablolarının ve arayüzünün oluşturulması.
+
+---
+
+## 📈 8. Sonuç ve Değerlendirme
+
+**GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Bu oturumda tamamlanan Flask-Login entegrasyonu, benzersizlik denetimleri ve e-posta tabanlı şifre sıfırlama akışları sayesinde sistemin güvenlik altyapısı sağlamlaştırılmıştır. Modüler Blueprint tasarımı ve temiz veritabanı ilişkileri projenin sonraki fazlarda rahatça büyümesine imkan tanımaktadır.
+

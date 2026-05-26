@@ -99,3 +99,35 @@ Flask uygulamasının hata sayfalarının (404, 500) özelleştirilmesi, rota en
 #### 💡 Kazanım:
 * Flask projelerinde `shell_context_processor` yapısının geliştirme ve test hızına katkısını deneyimledim.
 * Blueprints üzerinden global hata yakalama (`app_errorhandler`) mantığını kavrayarak modüler hata yönetimini uyguladım.
+
+---
+
+### 📅 Günlük Kaydı: 26 Mayıs 2026 (3. Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Flask-Login entegrasyonu, şifre hashleme, güvenli form yapılarının (Kayıt, Giriş) hazırlanması ve e-posta tabanlı şifre sıfırlama (Forgot Password) akışının tasarlanması.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "Bağlam: GaziKampuste projemizin 3. oturumundayız. User modelimiz (SQLAlchemy 2.x ile) hazır ve app/auth/ blueprint'i kuruldu ama içi boş. Veritabanı bağlantımız sorunsuz çalışıyor.
+> 
+> Hedef: Tam çalışan ve güvenli bir Kayıt (Register), Giriş (Login), Çıkış (Logout) akışı kur. Ayrıca +5 puanlık bonus hedefi için "E-posta ile Şifre Sıfırlama" (Forgot Password) akışını da sisteme entegre et.
+> 
+> Adımlar:
+> 1. app/auth/forms.py: RegisterForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm oluştur (Flask-WTF ve validatorler dahil).
+> 2. app/auth/routes.py: /register, /login, /logout, /reset_password_request, /reset_password/<token> rotalarını yaz.
+> 3. app/templates/auth/: register.html, login.html ve şifre sıfırlama sayfalarını Bootstrap 5 standartlarında tasarla.
+> 4. app/__init__.py: Flask-Login'i yapılandır (login_manager, user_loader)."
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **Şifre Sıfırlama Token Metotları**: `User` modeline `itsdangerous.URLSafeTimedSerializer` kullanan şifre sıfırlama token üretici (`get_reset_password_token`) ve doğrulayıcı (`verify_reset_password_token`) metotları eklendi.
+2. **Güvenli WTForms Tanımlamaları**: `forms.py` içinde e-posta biçimini denetleyen, şifrelerin eşleşmesini kontrol eden ve veritabanından kullanıcı adı ile e-postanın benzersizliğini (uniqueness) sorgulayan `validate_username` ve `validate_email` metotları yazıldı.
+3. **Kimlik Doğrulama Rotaları**: `routes.py` dosyasına tüm rotalar Türkçe flash mesajları ve güvenlik denetimleriyle eklendi. Şifre sıfırlama taleplerini terminale çıktı olarak yazan güvenli bir mock fonksiyon (`send_reset_email`) oluşturuldu. Giriş yapmış kullanıcıların `/login` ve `/register` rotalarından anasayfaya yönlendirilmesi sağlandı.
+4. **Flask-Login Yapılandırması**: `app/__init__.py` içinde `login_manager`'ın yönlendireceği `login_view` ayarlandı ve uyarı mesajı Türkçe olarak güncellendi.
+5. **Arayüz ve Tema Entegrasyonu**: Bootstrap 5 standartlarında oluşturulan kayıt, giriş ve şifre sıfırlama şablonları, projenin mevcut glassmorphism karanlık temasına (`style.css`'e eklenen form ve alert sınıflarıyla) başarıyla uyarlandı. `base.html` şablonuna oturum açmış kullanıcıyı karşılama mesajı, Çıkış Yap butonu ve kapatılabilir alert mesaj kutuları eklendi.
+
+#### 💡 Kazanım:
+* Flask-Login modülüyle oturum yönetiminin temellerini, giriş ve çıkış işlemlerinin güvenli bir şekilde nasıl gerçekleştirildiğini öğrendim.
+* Şifre güvenliğinde hashlemenin önemini ve `itsdangerous` ile imzalı süre sınırlı token'ların (şifre sıfırlama bağlantıları için) nasıl kullanılacağını kavradım.
+* Bootstrap 5 form yapısı ile özel CSS (glassmorphism) stillerinin bir arada uyumlu şekilde nasıl harmanlanacağını deneyimledim.
+* Formlarda CSRF korumasının ve veritabanı benzersizlik doğrulamalarının pratik uygulamasını pekiştirdim.
+

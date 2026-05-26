@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Giriş Yap - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Gazi<span>Kampüste</span> Giriş</h2>
+        <form method="POST" action="" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.username_or_email.label(class="form-label") }}
+                {% if form.username_or_email.errors %}
+                    {{ form.username_or_email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username_or_email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username_or_email(class="form-control", placeholder="Kullanıcı adı veya e-posta girin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control", placeholder="Şifrenizi girin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group form-check mb-3">
+                {{ form.remember_me(class="form-check-input") }}
+                {{ form.remember_me.label(class="form-check-label text-secondary") }}
+            </div>
+
+            <div class="d-grid mt-4">
+                {{ form.submit(class="btn btn-primary w-100") }}
+            </div>
+        </form>
+        <div class="auth-links d-flex flex-column gap-2 mt-4">
+            <div>
+                Hesabınız yok mu? <a href="{{ url_for('auth.register') }}">Kayıt Ol</a>
+            </div>
+            <div>
+                Şifrenizi mi unuttunuz? <a href="{{ url_for('auth.reset_password_request') }}">Şifremi Sıfırla</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

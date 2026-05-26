@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Kayıt Ol - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="auth-title">Gazi<span>Kampüste</span> Kayıt</h2>
+        <form method="POST" action="" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="form-control", placeholder="Kullanıcı adı belirleyin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control", placeholder="E-posta adresinizi girin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control", placeholder="Şifrenizi belirleyin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password_confirm.label(class="form-label") }}
+                {% if form.password_confirm.errors %}
+                    {{ form.password_confirm(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password_confirm.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password_confirm(class="form-control", placeholder="Şifrenizi tekrar girin") }}
+                {% endif %}
+            </div>
+
+            <div class="d-grid mt-4">
+                {{ form.submit(class="btn btn-primary w-100") }}
+            </div>
+        </form>
+        <div class="auth-links mt-4">
+            Zaten bir hesabınız var mı? <a href="{{ url_for('auth.login') }}">Giriş Yap</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -30,6 +30,24 @@ class User(UserMixin, db.Model):
     def __repr__(self) -> str:
         return f'<User {self.username}>'
 
+    def get_reset_password_token(self) -> str:
+        from flask import current_app
+        from itsdangerous import URLSafeTimedSerializer as Serializer
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'user_id': self.id})
+
+    @staticmethod
+    def verify_reset_password_token(token: str, expires_in: int = 600) -> Optional['User']:
+        from flask import current_app
+        from itsdangerous import URLSafeTimedSerializer as Serializer
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token, max_age=expires_in)
+        except Exception:
+            return None
+        return db.session.get(User, data['user_id'])
+
+
 
 class CafeteriaMenu(db.Model):
     __tablename__ = 'cafeteria_menus'

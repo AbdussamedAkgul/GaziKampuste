@@ -36,6 +36,18 @@ run.py               # Uygulamayı başlatan ana giriş noktası
 
 ---
 
+## 🗄️ Veritabanı Modelleri
+
+Uygulamada kullanılan veritabanı şeması ve modelleri **SQLAlchemy 2.0** standartlarında (`Mapped` ve `mapped_column`) [app/models.py](file:///c:/Users/AKGUL/Desktop/Abd%C3%BCssamed/Gazi%20Ders/GaziMobilFinalEdizHoca/app/models.py) içinde tanımlanmıştır:
+
+1. **User (Kullanıcı)**: Kullanıcı bilgilerini (öğrenci, editör, yönetici rolleriyle) saklar. Şifre güvenliği `werkzeug.security` (`set_password`/`check_password`) ile gerçekleştirilir. `Flask-Login` uyumludur.
+2. **CafeteriaMenu (Yemekhane Menüsü)**: Günlük yemek listelerini tutar. Aynı gün için hem normal hem de vejetaryen menü girişini destekler.
+3. **Announcement (Duyuru)**: Kampüs ve yüksekokul duyurularını saklar.
+
+*Modeller arasındaki Bire-Çok (One-to-Many) ilişkiler kurulmuş ve ilişkili silme işlemleri (`cascade="all, delete-orphan"`) yapılandırılmıştır.*
+
+---
+
 ## 🛠️ Kullanılan Teknolojiler
 
 Projede sadece aşağıda belirtilen temel kütüphaneler kullanılmıştır:

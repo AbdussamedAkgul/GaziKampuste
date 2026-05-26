@@ -90,32 +90,42 @@ Projede gereksiz bağımlılıklardan kaçınılarak sadece projenin temel gerek
 
 ---
 
-## 🗄️ 5. Veritabanı Tasarımı (Planlanan Modeller)
+## 🗄️ 5. Veritabanı Tasarımı (Gerçekleştirilen ve Planlanan Modeller)
 
-Veritabanında tutulacak tablolar ve aralarındaki ilişkiler şu şekilde planlanmıştır:
+Veritabanı tasarımı, modern **SQLAlchemy 2.0** (Mapped, mapped_column) standartlarına uygun şekilde yapılmıştır. Gerçekleştirilen modeller ve planlanan diğer tablolar şu şekildedir:
 
-1. **User (Kullanıcı Tablosu):**
-   * `id` (Primary Key)
-   * `username` (Benzersiz Kullanıcı Adı)
-   * `email` (Benzersiz E-posta)
-   * `password_hash` (Güvenli Şifrelenmiş Parola)
-   * `role` (Admin / Editor / Student)
+### 🟢 Gerçekleştirilen Modeller
 
-2. **MealMenu (Yemekhane Menüsü Tablosu):**
-   * `id` (Primary Key)
-   * `date` (Tarih - Benzersiz)
-   * `soup` (Çorba)
-   * `main_dish` (Ana Yemek)
-   * `side_dish` (Yardımcı Yemek)
-   * `dessert_or_fruit` (Tatlı veya Meyve)
-   * `calories` (Toplam Kalori Değeri)
+1. **User (Kullanıcı Tablosu - `users`):**
+   * `id`: `Mapped[int]` (Primary Key)
+   * `username`: `Mapped[str]` (Benzersiz Kullanıcı Adı, Index, String(64))
+   * `email`: `Mapped[str]` (Benzersiz E-posta, Index, String(120))
+   * `password_hash`: `Mapped[str]` (Parola Hash Değeri, String(256))
+   * `role`: `Mapped[str]` (Rol - student/editor/admin, varsayılan: 'student', String(20))
+   * `avatar_file`: `Mapped[str]` (Profil Resmi Dosya Adı, varsayılan: 'default.jpg', String(64))
+   * `created_at`: `Mapped[date]` (Oluşturulma Tarihi, varsayılan: `date.today`, Date)
+   * **İlişkiler:** `menus` (CafeteriaMenu ile Bire-Çok), `announcements` (Announcement ile Bire-Çok)
 
-3. **Announcement (Duyuru Tablosu):**
-   * `id` (Primary Key)
-   * `title` (Başlık)
-   * `content` (Duyuru İçeriği)
-   * `created_at` (Oluşturulma Tarihi)
-   * `user_id` (Duyuruyu Yayınlayan Editör/Yönetici ID - Foreign Key)
+2. **CafeteriaMenu (Yemekhane Menüsü Tablosu - `cafeteria_menus`):**
+   * `id`: `Mapped[int]` (Primary Key)
+   * `date`: `Mapped[date]` (Menü Tarihi, Index, Date)
+   * `menu_type`: `Mapped[str]` (Menü Türü - normal/vegetarian, varsayılan: 'normal', String(20))
+   * `soup`: `Mapped[str]` (Çorba, String(100))
+   * `main_dish`: `Mapped[str]` (Ana Yemek, String(100))
+   * `side_dish`: `Mapped[str]` (Yardımcı Yemek, String(100))
+   * `calories`: `Mapped[Optional[int]]` (Kalori Değeri, Nullable)
+   * `user_id`: `Mapped[int]` (Ekleyen Kullanıcı ID - Foreign Key -> `users.id`)
+   * **İlişkiler:** `author` (User ile Çok-Bir)
+
+3. **Announcement (Duyuru Tablosu - `announcements`):**
+   * `id`: `Mapped[int]` (Primary Key)
+   * `title`: `Mapped[str]` (Başlık, String(100))
+   * `content`: `Mapped[str]` (Duyuru İçeriği, Text)
+   * `date`: `Mapped[date]` (Yayınlanma Tarihi, varsayılan: `date.today`, Date)
+   * `user_id`: `Mapped[int]` (Yayınlayan Kullanıcı ID - Foreign Key -> `users.id`)
+   * **İlişkiler:** `author` (User ile Çok-Bir)
+
+### 🟡 Planlanan Modeller
 
 4. **ClassSchedule (Ders Programı Tablosu):**
    * `id` (Primary Key)

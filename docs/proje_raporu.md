@@ -54,7 +54,9 @@ GaziKampuste/
 │   │   └── routes.py           # Giriş, çıkış ve kayıt rotaları
 │   │
 │   ├── templates/              # Jinja2 HTML Şablonları
-│   │   └── base.html           # Tüm sayfaların türeyeceği ana şablon
+│   │   ├── base.html           # Tüm sayfaların türeyeceği ana şablon
+│   │   ├── 404.html            # Sayfa Bulunamadı hata şablonu
+│   │   └── 500.html            # Beklenmedik sunucu hatası şablonu
 │   │
 │   └── static/                 # Statik Dosyalar (CSS, JS, Görseller)
 │
@@ -144,7 +146,8 @@ Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan
 1. **Şablon Tasarımları (Frontend):** Modern, mobil uyumlu (responsive) ve Gazi Üniversitesi renk temasına uygun bir kullanıcı arayüzü (UI) geliştirilmesi.
 2. **Kullanıcı Giriş Sistemi Aktivasyonu:** `Flask-Login` kullanılarak şifre hashleme (`werkzeug.security`) mekanizmasıyla giriş/çıkış işlemlerinin tamamlanması.
 3. **Yönetim Paneli (Admin Panel):** Yönetici ve editörlerin veritabanına yeni yemek listesi, duyuru ve ders programı ekleyebileceği formların ve tabloların oluşturulması.
-4. **Hata Sayfaları (Error Handling):** 404 (Sayfa Bulunamadı) ve 500 (Sunucu Hatası) gibi durumlar için özel şık tasarım hata sayfalarının hazırlanması.
+
+*(Not: Hata Sayfaları (Error Handling) bu oturumda tamamlanmış, 404 ve 500 hata durumları şablonlarıyla birlikte sisteme entegre edilmiştir.)*
 
 ---
 

@@ -20,6 +20,8 @@ app/
   models.py          # Veritabanı modelleri (SQLAlchemy)
   templates/
     base.html        # Jinja2 ana HTML şablonu
+    404.html         # Sayfa Bulunamadı hata şablonu
+    500.html         # Beklenmedik sunucu hatası şablonu
   static/            # CSS, JS ve görsel dosyaları
 docs/
   yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)

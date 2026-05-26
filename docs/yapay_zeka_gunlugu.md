@@ -81,3 +81,21 @@ Veritabanı modellerinin (`User`, `CafeteriaMenu`, `Announcement`) SQLAlchemy 2.
 * SQLAlchemy 2.x ile gelen tip güvenli `Mapped` ve `mapped_column` kullanımının avantajlarını ve yeni deklaratif yapısını kavradım.
 * Veritabanı tasarımında iş kurallarına göre (örn: aynı gün hem normal hem vejetaryen menü olabilmesi) benzersizlik (unique) kısıtlarının ve ek alanların (`menu_type`) nasıl şekillendirileceğini öğrendim.
 * İlişkili tablolarda cascade (silme/güncelleme yayılımı) mekanizmasının SQLAlchemy ORM düzeyinde nasıl yapılandırıldığını uyguladım.
+
+---
+
+### 📅 Günlük Kaydı: 26 Mayıs 2026 (Ek Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Flask uygulamasının hata sayfalarının (404, 500) özelleştirilmesi, rota entegrasyonu ve geliştirici kolaylığı için Flask Shell context işlemcisinin `run.py` içerisine entegre edilmesi.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "şuan githubda 6 commits var bunu minimum 15 yapmamız gerekiyor bana şimdilik 2 commits sağlayacak birşeyler yapar mısın githuba"
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **Shell Context Processor Entegrasyonu (Commit 1)**: `run.py` dosyasına `shell_context_processor` eklendi. Böylece `flask shell` komutu çalıştırıldığında veritabanı oturumu (`db`) ve tüm modeller (`User`, `CafeteriaMenu`, `Announcement`) otomatik olarak yüklenecektir.
+2. **Özel Hata Sayfaları ve Rotaları (Commit 2)**: 404 (Sayfa Bulunamadı) ve 500 (Sunucu Hatası) durumları için kullanıcı dostu şablonlar (`404.html`, `500.html`) tasarlandı. Bu şablonlar `main` blueprint'i üzerinden `@main.app_errorhandler` ile tüm uygulamaya hizmet verecek şekilde kaydedildi.
+
+#### 💡 Kazanım:
+* Flask projelerinde `shell_context_processor` yapısının geliştirme ve test hızına katkısını deneyimledim.
+* Blueprints üzerinden global hata yakalama (`app_errorhandler`) mantığını kavrayarak modüler hata yönetimini uyguladım.

@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}GaziKampüste Yönetim Sistemi{% endblock %}</title>
+    <title>{% block title %}GaziKampuste Yönetim Sistemi{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <h1>GaziKampüste Yönetim Sistemi</h1>
-        <nav>
-            <a href="{{ url_for('main.index') }}">Ana Sayfa</a> | 
-            <a href="{{ url_for('auth.login') }}">Giriş</a>
-        </nav>
+        <div class="nav-container">
+            <a href="{{ url_for('main.index') }}" class="logo-link">
+                <div class="logo-text">Gazi<span>Kampüste</span></div>
+            </a>
+            <nav>
+                <a href="{{ url_for('main.index') }}" class="{% if request.blueprint == 'main' and request.endpoint == 'main.index' %}active{% endif %}">Ana Sayfa</a>
+                <a href="{{ url_for('auth.login') }}" class="btn-login">Giriş Yap</a>
+            </nav>
+        </div>
     </header>
+
     <main>
         {% block content %}{% endblock %}
     </main>
+
+    <footer>
+        <p>&copy; 2026 <span>GaziKampüste</span> Yönetim Sistemi. Tüm Hakları Saklıdır.</p>
+    </footer>
 </body>
 </html>

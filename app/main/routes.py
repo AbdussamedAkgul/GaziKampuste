@@ -4,7 +4,7 @@ from app.main import main
 @main.route('/')
 @main.route('/index')
 def index():
-    return "GaziKampuste Yönetim Sistemi - Ana Sayfa (Main Blueprint)"
+    return render_template('index.html')
 
 @main.app_errorhandler(404)
 def not_found_error(error):

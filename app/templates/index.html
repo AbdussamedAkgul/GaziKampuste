@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Ana Sayfa - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Gazi Üniversitesi Kampüs <span>Yönetim Sistemi</span></h1>
+    <p>
+        Öğrenciler ve personel için yemekhane menüsü takibi, ders programı bilgilendirmesi ve anlık duyurular tek bir güvenli panelde.
+    </p>
+    <div class="hero-buttons">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Yönetici Girişi</a>
+        <a href="#yemekhane" class="btn btn-secondary">Yemekhane Menüsü</a>
+    </div>
+</section>
+
+<!-- Yemekhane Menüsü Bölümü -->
+<section id="yemekhane">
+    <h2 class="section-title">🍴 Günün Yemekhane Menüsü</h2>
+    <div class="grid-container">
+        <!-- Normal Menü Kartı -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-tag tag-normal">Normal Menü</span>
+                <span class="card-date">26 Mayıs 2026</span>
+            </div>
+            <ul class="menu-items">
+                <li>
+                    <span class="menu-label">Süzme Mercimek Çorbası</span>
+                    <span class="menu-val">180 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">İzmir Köfte</span>
+                    <span class="menu-val">340 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">Pirinç Pilavı</span>
+                    <span class="menu-val">220 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">Mevsim Meyvesi</span>
+                    <span class="menu-val">90 kcal</span>
+                </li>
+            </ul>
+            <div class="calories-box">
+                <span>Toplam Enerji</span>
+                <strong>830 kcal</strong>
+            </div>
+            <div class="card-footer">
+                <div class="author-info">
+                    <div class="author-avatar">A</div>
+                    <span>Yönetici (Admin)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vejetaryen Menü Kartı -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-tag tag-veg">Vejetaryen Menü</span>
+                <span class="card-date">26 Mayıs 2026</span>
+            </div>
+            <ul class="menu-items">
+                <li>
+                    <span class="menu-label">Süzme Mercimek Çorbası</span>
+                    <span class="menu-val">180 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">Zeytinyağlı Taze Fasulye</span>
+                    <span class="menu-val">180 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">Bulgur Pilavı</span>
+                    <span class="menu-val">200 kcal</span>
+                </li>
+                <li>
+                    <span class="menu-label">Mevsim Meyvesi</span>
+                    <span class="menu-val">90 kcal</span>
+                </li>
+            </ul>
+            <div class="calories-box">
+                <span>Toplam Enerji</span>
+                <strong>650 kcal</strong>
+            </div>
+            <div class="card-footer">
+                <div class="author-info">
+                    <div class="author-avatar">E</div>
+                    <span>Editör (Yemekhane)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Son Duyurular Bölümü -->
+<section id="duyurular">
+    <h2 class="section-title">📢 Son Duyurular</h2>
+    <div class="grid-container">
+        <!-- Duyuru 1 -->
+        <div class="card announcement-card">
+            <div class="card-header">
+                <span class="card-date">26 Mayıs 2026</span>
+            </div>
+            <h3 class="announcement-title">Bahar Dönemi Bütünleme Sınav Programı</h3>
+            <p class="announcement-content">
+                TUSAŞ Kazan Meslek Yüksekokulu 2025-2026 Bahar Dönemi bütünleme sınav programı ilan edilmiştir. Sınavlara girecek tüm öğrencilerimize başarılar dileriz. Detaylı programa duyuru ekinden ulaşabilirsiniz.
+            </p>
+            <div class="card-footer">
+                <div class="author-info">
+                    <div class="author-avatar">A</div>
+                    <span>Öğrenci İşleri</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duyuru 2 -->
+        <div class="card announcement-card">
+            <div class="card-header">
+                <span class="card-date">25 Mayıs 2026</span>
+            </div>
+            <h3 class="announcement-title">Yemekhane Kart Dolum İşlemleri Hakkında</h3>
+            <p class="announcement-content">
+                Yeni online bakiye yükleme sistemi aktif edilmiştir. Öğrencilerimiz artık öğrenci portalı üzerinden kredi kartı veya banka kartı ile anında yemekhane bakiyesi yüklemesi yapabilirler.
+            </p>
+            <div class="card-footer">
+                <div class="author-info">
+                    <div class="author-avatar">S</div>
+                    <span>Sağlık, Kültür ve Spor Daire Bşk.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

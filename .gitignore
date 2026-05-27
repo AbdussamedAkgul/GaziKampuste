@@ -18,3 +18,8 @@ __pycache__/
 # IDE ayarları
 .vscode/
 .idea/
+
+# Geçici Git araçları
+temp_git/
+temp_git_*.py
+mingit.zip

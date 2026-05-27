@@ -140,35 +140,54 @@ Veritabanı tasarımı, modern **SQLAlchemy 2.0** (Mapped, mapped_column) standa
 
 ---
 
-## 🔐 6. Kimlik Doğrulama ve Güvenlik Akışları
+## 🔐 6. Kimlik Doğrulama, Profil Yönetimi ve Güvenlik Akışları
 
-Projenin 3. oturumunda, güvenli ve tam fonksiyonel bir kullanıcı yönetim sistemi devreye alınmıştır. Bu sistem kapsamında aşağıdaki mekanizmalar uygulanmıştır:
+Projenin 3. ve 4. oturumlarında, güvenli ve tam fonksiyonel bir kullanıcı yönetim sistemi ve profil altyapısı kurulmuştur. Bu sistem kapsamında aşağıdaki mekanizmalar uygulanmıştır:
 
 ### 🔑 Şifre Güvenliği ve Hashleme
 Kullanıcı şifreleri veritabanına asla düz metin (plain text) olarak kaydedilmez. `User` modeli üzerinde `werkzeug.security` kütüphanesinin `generate_password_hash` ve `check_password_hash` metotları kullanılarak şifreler SHA-256 algoritmasıyla güvenli bir şekilde hashlenir ve doğrulanır.
 
-### 🛡️ CSRF ve Form Güvenliği
-Flask-WTF ve WTForms kütüphaneleri kullanılarak geliştirilen tüm form yapılarında (`RegisterForm`, `LoginForm`, `ResetPasswordRequestForm`, `ResetPasswordForm`) CSRF (Cross-Site Request Forgery) koruması (`form.hidden_tag()`) zorunlu kılınmıştır. Formlara ayrıca e-posta doğrulaması, kullanıcı adı regex kısıtlamaları (sadece harf, rakam, alt çizgi ve nokta) ve veritabanı düzeyinde benzersizlik (unique) doğrulayıcıları eklenmiştir.
+### 🛡️ CSRF, Form Güvenliği ve Avatar Yükleme
+Flask-WTF ve WTForms kütüphaneleri kullanılarak geliştirilen tüm form yapılarında (`RegisterForm`, `LoginForm`, `ResetPasswordRequestForm`, `ResetPasswordForm`, `ProfileForm`, `CafeteriaMenuForm`, `AnnouncementForm`) CSRF (Cross-Site Request Forgery) koruması (`form.hidden_tag()`) zorunlu kılınmıştır.
+* **Profil Güncelleme ve Avatar Yükleme:** Kullanıcılar profil bilgilerini `/profile` sayfasından güncelleyebilirler. `secure_filename` ve `FileAllowed` yardımıyla sadece `.png`, `.jpg`, `.jpeg` uzantılarına izin verilir. Yüklenen fotoğraflar `app/static/avatars/` klasörüne zaman damgalı tekil isimlerle kaydedilir. Önbellekleme sorunları önlenir ve eski avatar dosyası (varsayılan değilse) sunucu diskinden temizlenir.
 
 ### 📧 E-Posta ile Şifre Sıfırlama (Bonus Özellik)
 Kullanıcıların şifrelerini unutmaları durumunda e-posta adreslerine güvenli bir sıfırlama bağlantısı gönderilir.
 * **Token Güvenliği:** `itsdangerous.URLSafeTimedSerializer` kullanılarak her sıfırlama talebi için kullanıcının ID'sini içeren ve 10 dakika geçerliliği olan imzalı, güvenli bir token üretilir.
 * **Mock Servisi:** Yerel testlerin kolay yapılabilmesi için gerçek bir SMTP sunucusu yerine, gönderilen e-postanın içeriğini ve sıfırlama bağlantısını doğrudan terminal konsoluna yazdıran bir mock e-posta gönderim yapısı kurulmuştur.
 
-### 🎨 Glassmorphic Kullanıcı Arayüzü
-Giriş, kayıt olma ve şifre sıfırlama sayfaları Bootstrap 5 şablon standartlarına uygun şekilde tasarlanmış ve projenin genel dark-glassmorphism temasına entegre edilmiştir. Ayrıca `base.html` üzerinden kapatılabilir Türkçe flash mesaj bildirim kutuları eklenmiştir.
+---
+
+## 🍴 7. İçerik Yönetimi (CRUD), Yetkilendirme ve Sayfalama (4. Oturum)
+
+Uygulamanın ana içerik yönetim altyapısını oluşturan yemekhane menüleri ve duyurular için tam teşekküllü yönetim işlevleri entegre edilmiştir:
+
+### 📝 Tam CRUD Desteği
+`CafeteriaMenu` ve `Announcement` modelleri için ekleme, listeleme, düzenleme ve silme özellikleri rotalarla birlikte geliştirilmiştir. Form kontrolleri ve validasyonlar Flask-WTF ile sağlanmaktadır.
+
+### 🛑 Yetki ve Sahiplik Kontrolü
+Bir yemekhane menüsünü veya duyuruyu **sadece onu oluşturan yazar (sahibi)** düzenleyebilir veya silebilir. Başka bir kullanıcının bu işlemleri yapma veya doğrudan URL üzerinden erişim sağlama girişimlerinde `403 Forbidden` hata kodu döndürülür.
+
+### 🧼 Güvenli Kayıt Silme
+Silme işlemleri kesinlikle GET isteğiyle tetiklenemez. CSRF koruması içeren bir gizli form üzerinden, kullanıcıdan onay alınarak **POST** istekleriyle çalışır.
+
+### 📄 Bootstrap 5 ile Sayfalama
+SQLAlchemy ORM'in `paginate()` metodu kullanılarak menüler (`/menus`) ve duyurular (`/announcements`) sayfalarında **sayfa başına 5 kayıt** gösterilmektedir. Sayfalama butonları koyu glassmorphism tasarımına özel Bootstrap 5 yapısında tasarlanmıştır.
+
+### 🧪 Otomatik Birim Testleri (Automated Tests)
+Geliştirilen tüm CRUD yetkilendirme akışlarını, profile resim yükleme kurallarını ve sayfalama sınırlarını doğrulamak üzere `tests/test_crud_profile.py` test sınıfı yazılmıştır. Python'ın yerleşik `unittest` modülüyle çalıştırılan testler başarıyla geçmiştir (`OK`).
 
 ---
 
-## 🔮 7. Gelecek Geliştirme Adımları
+## 🔮 8. Gelecek Geliştirme Adımları
 
 Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan işler şunlardır:
-1. **Yönetim Paneli (Admin Panel) Geliştirilmesi:** Yetkilendirilmiş editör ve yöneticilerin veritabanına yeni yemekhane menüsü, duyuru ekleyebilmeleri için CRUD formlarının ve yönetim arayüzünün tamamlanması.
-2. **Ders Programı Modülü (ClassSchedule):** Öğrencilerin ve akademik personelin haftalık ders programlarını görebileceği veritabanı tablolarının ve arayüzünün oluşturulması.
+1. **Ders Programı Modülü (ClassSchedule):** Öğrencilerin ve akademik personelin haftalık ders programlarını görebileceği veritabanı tablolarının ve arayüzünün oluşturulması.
+2. **Kullanıcı Rol Yönetimi:** Adminlerin kullanıcı rollerini (`student`, `editor`, `admin`) yönetebileceği bir admin panel ara yüzünün tasarlanması.
 
 ---
 
-## 📈 8. Sonuç ve Değerlendirme
+## 📈 9. Sonuç ve Değerlendirme
 
-**GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Bu oturumda tamamlanan Flask-Login entegrasyonu, benzersizlik denetimleri ve e-posta tabanlı şifre sıfırlama akışları sayesinde sistemin güvenlik altyapısı sağlamlaştırılmıştır. Modüler Blueprint tasarımı ve temiz veritabanı ilişkileri projenin sonraki fazlarda rahatça büyümesine imkan tanımaktadır.
+**GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Son oturumla birlikte entegre edilen profil yönetimi, güvenli CRUD akışları, sahiplik yetki kontrolleri ve sayfalama sistemi sayesinde uygulamanın omurgası tamamlanmıştır. Yazılan otomatik birim testleri sistemin yüksek kalitede ve hatasız çalıştığını güvence altına almaktadır. Modüler Blueprint tasarımı projenin gelecekte rahatça büyümesine imkan tanımaktadır.
 

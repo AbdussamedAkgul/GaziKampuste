@@ -13,7 +13,8 @@ app/
   __init__.py        # Flask Uygulama Fabrikası (create_app) ve eklentilerin başlangıcı
   main/
     __init__.py      # Main Blueprint tanımlaması
-    routes.py        # Ana sayfa ve genel rota tanımlamaları
+    forms.py         # Profil, Yemekhane ve Duyuru WTForms tanımları [YENİ]
+    routes.py        # Ana sayfa, Profil ve CRUD rotaları
   auth/
     __init__.py      # Auth Blueprint tanımlaması
     forms.py         # Giriş, Kayıt ve Şifre Sıfırlama WTForms tanımları
@@ -21,6 +22,12 @@ app/
   models.py          # Veritabanı modelleri (SQLAlchemy 2.0)
   templates/
     base.html        # Jinja2 ana HTML şablonu (Bootstrap 5 & Flash Mesajları)
+    index.html       # Dinamik Ana Sayfa şablonu
+    profile.html     # Profil düzenleme ve avatar yükleme şablonu [YENİ]
+    menus.html       # Yemekhane menüleri listesi [YENİ]
+    menu_form.html   # Yemekhane menüsü ekleme/düzenleme formu [YENİ]
+    announcements.html # Duyurular listesi [YENİ]
+    announcement_form.html # Duyuru ekleme/düzenleme formu [YENİ]
     404.html         # Sayfa Bulunamadı hata şablonu
     500.html         # Beklenmedik sunucu hatası şablonu
     auth/            # Kimlik doğrulama arayüz şablonları
@@ -28,12 +35,17 @@ app/
       register.html
       reset_password_request.html
       reset_password.html
-  static/            # CSS, JS ve görsel dosyaları
+  static/            # CSS ve görsel dosyaları
+    css/
+      style.css      # Özelleştirilmiş dark-glassmorphism CSS
+    avatars/         # Kullanıcı profil fotoğrafları klasörü [YENİ]
+      default.jpg    # Varsayılan kullanıcı avatarı
 docs/
   yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)
   proje_raporu.md       # Proje Raporu (Project Report)
 migrations/          # Flask-Migrate veritabanı göç dosyaları
 tests/               # Birim ve entegrasyon testleri
+  test_crud_profile.py # CRUD, Profil ve Sayfalama Otomatik Testleri [YENİ]
 config.py            # Uygulama yapılandırma parametreleri
 requirements.txt     # Gerekli Python kütüphaneleri listesi
 .env.example         # Örnek çevre değişkenleri şablonu
@@ -56,10 +68,20 @@ Uygulamada kullanılan veritabanı şeması ve modelleri **SQLAlchemy 2.0** stan
 
 ---
 
-## 🔐 Kimlik Doğrulama & Güvenlik
+## 🔐 Kimlik Doğrulama, Profil Yönetimi & Güvenlik
 * **Şifre Hashleme:** Şifreler veritabanına asla düz metin olarak yazılmaz; `werkzeug.security` ile SHA-256 tabanlı güvenli bir biçimde hashlenir.
-* **Form Doğrulama & CSRF:** Tüm formlarda CSRF koruması aktiftir. Formlarda kullanıcı adı regex doğrulaması (sadece harf, rakam, `.`, `_`) ve e-posta biçim kontrolleri yapılmaktadır.
+* **Form Doğrulama & CSRF:** Tüm formlarda CSRF koruması aktiftir (`form.hidden_tag()`). Formlarda regex doğrulamaları ve veritabanı benzersizlik kontrolleri uygulanmaktadır.
 * **Şifre Sıfırlama:** E-posta ile şifre sıfırlama özelliği entegredir. E-postadaki bağlantı 10 dakika geçerli olup, yerel testlerde çıktıları konsola yansıtan mock bir e-posta yapısı kullanılır.
+* **Profil Fotoğrafı & Avatar Yükleme:** Kullanıcılar profil fotoğrafı (`avatar`) yükleyebilir. Uzantı doğrulama (.png, .jpg, .jpeg) ve `secure_filename` dosya temizleme kontrolleri barındırır. Yeni fotoğraf yüklendiğinde eski fotoğraf (varsayılan değilse) sunucu diskinden silinir.
+* **Yetki Kontrolleri (Ownership):** Yemekhane menüleri ve duyurular sadece onları oluşturan yazarlar tarafından düzenlenebilir veya silinebilir. Yetkisiz isteklerde sistem `403 Forbidden` hatası döndürür.
+* **Güvenli Silme İşlemleri:** Silme işlemleri kesinlikle GET isteğiyle yapılamaz; CSRF koruması içeren bir form aracılığıyla POST isteğiyle gerçekleştirilir.
+
+---
+
+## 📄 İçerik Yönetimi (CRUD) & Sayfalama (Pagination)
+* **CafeteriaMenu ve Announcement CRUD:** Menüler ve duyurular için Ekle, Listele, Düzenle ve Sil rotaları ve arayüz şablonları tasarlanmıştır.
+* **Bootstrap 5 Sayfalama:** Listeleme sayfalarında (menüler ve duyurular) SQLAlchemy `paginate()` metodu kullanılarak sayfa başına 5 kayıt gösterilir. Sayfalama butonları modern glassmorphic tasarıma göre stilize edilmiştir.
+* **Dinamik Anasayfa:** Anasayfa (`/`), günün normal ve vejetaryen menülerini ve en son eklenen 3 duyuruyu veritabanından dinamik olarak çeker. Günün menüsü bulunmadığında en son eklenen menüyü geri dönüş (fallback) olarak görüntüler.
 
 ---
 
@@ -74,6 +96,18 @@ Projede sadece aşağıda belirtilen temel kütüphaneler kullanılmıştır:
 * **python-dotenv**: `.env` dosyasındaki çevre değişkenlerinin yönetimi
 * **SQLite**: Hafif ve taşınabilir yerel veritabanı
 
+---
+
+## 🧪 Otomatik Testlerin Çalıştırılması (Birim Testleri)
+
+Projedeki profil, CRUD, yetki sahiplik ve sayfalama mantığını test eden birim testlerini yerelde koşturmak için aşağıdaki komutu çalıştırabilirsiniz:
+```bash
+python -m unittest tests/test_crud_profile.py
+```
+Veya testleri daha detaylı (verbose) raporlamak için:
+```bash
+python -m unittest -v tests/test_crud_profile.py
+```
 
 ---
 

@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Yemekhane Menüleri - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">🍴 Yemekhane Menüleri</h2>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.add_menu') }}" class="btn btn-primary">+ Yeni Menü Ekle</a>
+    {% endif %}
+</div>
+
+{% if menus %}
+    <div class="grid-container">
+        {% for menu in menus %}
+            <div class="card">
+                <div class="card-header">
+                    {% if menu.menu_type == 'normal' %}
+                        <span class="card-tag tag-normal">Normal Menü</span>
+                    {% else %}
+                        <span class="card-tag tag-veg">Vejetaryen Menü</span>
+                    {% endif %}
+                    <span class="card-date">{{ menu.date.strftime('%d %B %Y') }}</span>
+                </div>
+                <ul class="menu-items">
+                    <li>
+                        <span class="menu-label">Çorba</span>
+                        <span class="menu-val text-end">{{ menu.soup }}</span>
+                    </li>
+                    <li>
+                        <span class="menu-label">Ana Yemek</span>
+                        <span class="menu-val text-end">{{ menu.main_dish }}</span>
+                    </li>
+                    <li>
+                        <span class="menu-label">Yardımcı Yemek</span>
+                        <span class="menu-val text-end">{{ menu.side_dish }}</span>
+                    </li>
+                </ul>
+                {% if menu.calories %}
+                    <div class="calories-box">
+                        <span>Toplam Enerji</span>
+                        <strong>{{ menu.calories }} kcal</strong>
+                    </div>
+                {% endif %}
+                
+                <div class="card-footer d-flex flex-column gap-3 mt-3">
+                    <div class="author-info w-100 d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="author-avatar" style="width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
+                                <img src="{{ url_for('static', filename='avatars/' + menu.author.avatar_file) }}" alt="{{ menu.author.username }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <span class="text-secondary" style="font-size: 13px;">{{ menu.author.username }}</span>
+                        </div>
+                    </div>
+                    
+                    {% if current_user.is_authenticated and menu.author == current_user %}
+                        <div class="d-flex justify-content-end gap-2 w-100 border-top pt-2" style="border-color: rgba(255,255,255,0.05) !important;">
+                            <a href="{{ url_for('main.edit_menu', id=menu.id) }}" class="btn btn-sm btn-secondary" style="padding: 4px 12px; font-size: 13px;">Düzenle</a>
+                            <form action="{{ url_for('main.delete_menu', id=menu.id) }}" method="POST" onsubmit="return confirm('Bu yemekhane menüsünü silmek istediğinize emin misiniz?');">
+                                {{ delete_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-danger" style="padding: 4px 12px; font-size: 13px; background-color: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.4); color: #feb2b2;">Sil</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap 5 Pagination -->
+    {% if pagination.pages > 1 %}
+        <nav aria-label="Menü Sayfalama" class="d-flex justify-content-center mt-4">
+            <ul class="pagination">
+                <!-- Previous Page -->
+                <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{% if pagination.has_prev %}{{ url_for('main.menus_list', page=pagination.prev_num) }}{% else %}#{% endif %}" aria-label="Önceki">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                
+                <!-- Page Numbers -->
+                {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if page_num %}
+                        <li class="page-item {% if pagination.page == page_num %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('main.menus_list', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Next Page -->
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{% if pagination.has_next %}{{ url_for('main.menus_list', page=pagination.next_num) }}{% else %}#{% endif %}" aria-label="Sonraki">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    <div class="card text-center p-5">
+        <p class="text-secondary mb-0">Henüz eklenmiş bir yemekhane menüsü bulunmamaktadır.</p>
+    </div>
+{% endif %}
+
+<!-- Pagination Custom Styles (Dark Theme Glassmorphism match) -->
+<style>
+.pagination .page-link {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    transition: var(--transition);
+    padding: 8px 16px;
+}
+.pagination .page-link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--bg-dark);
+    font-weight: 600;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.2);
+}
+</style>
+{% endblock %}

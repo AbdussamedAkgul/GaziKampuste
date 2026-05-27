@@ -131,3 +131,39 @@ Flask-Login entegrasyonu, şifre hashleme, güvenli form yapılarının (Kayıt,
 * Bootstrap 5 form yapısı ile özel CSS (glassmorphism) stillerinin bir arada uyumlu şekilde nasıl harmanlanacağını deneyimledim.
 * Formlarda CSRF korumasının ve veritabanı benzersizlik doğrulamalarının pratik uygulamasını pekiştirdim.
 
+---
+
+### 📅 Günlük Kaydı: 27 Mayıs 2026 (4. Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Kullanıcı profil yönetimi (avatar resmi yükleme ve güncelleme), CafeteriaMenu ve Announcement modelleri için tam CRUD (Ekle, Listele, Düzenle, Sil) rotalarının oluşturulması, sayfa başına 5 kayıt sınırlı sayfalama (pagination) entegrasyonu ve güvenlik kısıtlamalarının (POST-only silme, secure_filename, yetki/sahiplik kontrolü) uygulanması.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "Bağlam: GaziKampuste projemizin 4. oturumundayız. Kimlik doğrulama (auth) sistemi kusursuz çalışıyor. Şimdi uygulamanın ana içerik yönetimini (CRUD), sayfalama (pagination) zorunluluğunu ve +4 puanlık "Kullanıcı Profili ve Avatar Yükleme" bonusunu sisteme entegre edeceğiz.
+> 
+> Hedef:
+> 1. Profil Sistemi: app/main/routes.py içinde bir /profile rotası oluştur. Kullanıcılar bilgilerini güncelleyebilsin ve profil fotoğrafı (avatar) yükleyebilsin. Yüklenen fotoğraflar app/static/avatars/ klasörüne kaydedilsin.
+> 2. CRUD İşlemleri: CafeteriaMenu ve Announcement modelleri için tam teşekküllü Ekle, Listele, Düzenle ve Sil rotalarını oluştur.
+> 3. Sayfalama: Tüm listeleme sayfalarında (menüler ve duyurular) SQLAlchemy'nin paginate() metodunu kullanarak sayfa başı 5 kayıt göster. Sayfalama butonlarını Bootstrap 5 ile tasarla.
+> 
+> Kısıtlar:
+> - Avatar yükleme işleminde KESİNLİKLE werkzeug.utils içinden secure_filename kullan ve sadece izin verilen dosya uzantılarına (.png, .jpg, .jpeg) izin ver (Validation ekle).
+> - Yetki Kontrolü: Bir yemekhane menüsünü veya duyuruyu SADECE onu oluşturan kullanıcı (sahibi) düzenleyebilir veya silebilir. Başkası düzenlemeye çalışırsa 403 hatası döndür.
+> - Güvenlik: Silme işlemleri kesinlikle GET isteğiyle yapılmamalı, CSRF koruması içeren bir form üzerinden POST isteğiyle yapılmalı.
+> - Tasarım: Her rota için ilgili HTML şablonlarını (jinja2 ile) Bootstrap 5 standartlarında ve mobil uyumlu olarak oluştur."
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **Profil Formu ve Fotoğraf Yükleme**: `app/main/forms.py` içinde `ProfileForm` tanımlandı. `FileField` ve `FileAllowed` kullanılarak dosya türü doğrulamaları yapıldı. Sunucuda dosya adlarının güvenliği `secure_filename` ile sağlandı. Dosya isimlerinin çakışmaması ve tarayıcı önbellek sorunlarının önlenmesi için her dosyaya zaman damgalı (`time.time()`) benzersiz isimler atandı. Kullanıcının mevcut avatarı (varsayılan değilse) yenisi yüklendiğinde diskten silinecek şekilde optimize edildi.
+2. **Yemekhane Menüsü ve Duyuru CRUD Yapısı**: Modeller için Ekle (Create), Listele (Read), Düzenle (Update) ve Sil (Delete) rotaları `routes.py` dosyasına eklendi.
+3. **Güvenlik ve Yetkilendirme Kontrolleri**: Silme işlemleri GET isteğine kapatılarak (`POST` metoduna zorlanarak) Flask-WTF CSRF koruması içeren formlarla güvenli hale getirildi. Bir kayıt düzenlenmek veya silinmek istendiğinde, kaydın `author` ilişkisi ile `current_user` doğrulaması yapıldı; yetkisiz erişim denemelerinde `abort(403)` (Forbidden) tetiklendi.
+4. **Bootstrap 5 ile Sayfalama**: SQLAlchemy ORM'in `paginate()` metodu kullanılarak menü ve duyuru listeleri sayfa başı 5 kayıt limitine bağlandı. Butonlar koyu glassmorphism temasına uyumlu olacak şekilde Bootstrap 5 ve özel CSS ile tasarlandı.
+5. **Dinamik Ana Sayfa**: Önceden statik/hardcoded olan ana sayfa güncellenerek günün menülerini (normal ve vejetaryen) ve son 3 duyuruyu veritabanından dinamik çekmek üzere yapılandırıldı.
+6. **Otomatik Birim Testleri**: Tüm CRUD, sayfalama ve yetki mantığını test eden `tests/test_crud_profile.py` yazıldı ve tüm testlerin (`Ran 6 tests... OK`) başarıyla geçtiği doğrulandı.
+
+#### 💡 Kazanım:
+* Flask-WTF ile dosya yükleme işlemlerini ve `secure_filename` ile sunucu dizini güvenliği sağlamayı öğrendim.
+* Veritabanı ilişkileri üzerinden sahiplik denetimini (yetkilendirme) ve yetkisiz işlemleri `403 Forbidden` ile engellemeyi kavradım.
+* Güvensiz silme işlemlerinin önüne geçmek için POST metodunu ve CSRF token doğrulamasını harmanlayarak güvenli veri silme pratiklerini uyguladım.
+* SQLAlchemy `paginate()` yapısını ve Jinja2 şablonlarında döngüsel sayfa numaralandırmalarını yönetmeyi öğrendim.
+
+

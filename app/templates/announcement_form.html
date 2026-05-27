@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Duyuru Ekle/Düzenle - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="auth-container" style="max-width: 650px;">
+    <div class="auth-card">
+        <h2 class="auth-title">
+            {% if 'Ekle' in title %}
+                Yeni Duyuru <span>Ekle</span>
+            {% else %}
+                Duyuru <span>Düzenle</span>
+            {% endif %}
+        </h2>
+        
+        <form method="POST" action="" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.title.label(class="form-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.title(class="form-control", placeholder="Duyuru başlığını girin") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group mt-3">
+                {{ form.content.label(class="form-label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control is-invalid", rows="8") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.content(class="form-control", rows="8", placeholder="Duyuru içeriğini buraya yazın...") }}
+                {% endif %}
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <a href="{{ url_for('main.announcements_list') }}" class="btn btn-secondary w-50 text-center">İptal</a>
+                {{ form.submit(class="btn btn-primary w-50") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

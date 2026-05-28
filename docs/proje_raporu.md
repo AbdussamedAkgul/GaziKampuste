@@ -194,7 +194,25 @@ Uygulama küresel standartlara taşınarak `Flask-Babel` kütüphanesi entegrasy
 
 ---
 
-## 🔮 9. Gelecek Geliştirme Adımları
+## ⚙️ 9. Üretime Hazırlık, Test Altyapısı ve UI/UX İyileştirmeleri (6. Oturum)
+
+Uygulamanın canlıya (production) alınabilmesi adına sağlam bir test altyapısı ve hata yönetim sistemi kurulmuştur:
+
+### 🧪 İzole Test Ortamı (In-Memory SQLite)
+Uygulama testlerinin gerçek veritabanını bozmasını önlemek amacıyla `pytest` ve `flask-testing` paketleri sisteme entegre edildi. `tests/conftest.py` içerisinde `sqlite:///:memory:` (hafıza tabanlı geçici veritabanı) ayarlanarak, testler çalıştırıldığında her seferinde temiz bir veritabanı sağlanır.
+
+### 🛡️ Kapsamlı Birim Testleri
+Kullanıcı kayıt, giriş (başarılı/hatalı şifre) işlemleri ve şifre hash/doğrulama mantığını sınamak üzere Türkçe açıklamalı birim testleri (`test_models.py`, `test_auth.py`) sisteme kazandırılmıştır.
+
+### 🎨 Gelişmiş Hata Yönetimi
+404 (Sayfa Bulunamadı) ve 500 (Sunucu Hatası) durumları için, sitenin genel karanlık `glassmorphism` tasarımına birebir uyan modern Bootstrap 5 şablonları tasarlandı.
+
+### 📱 Mobil Uyum (Responsive) Revizyonu
+Menü ve duyuru listelerinin tablo (table) değil modern CSS Grid ile oluşturulduğu göz önüne alınarak, `style.css` içerisinde yer alan `grid-template-columns` alanına `min(100%, 340px)` dinamik CSS formülü eklenmiştir. Bu sayede özellikle dar ekranlı mobil cihazlarda arayüzün taşması (overflow) tamamen engellenmiştir. Uyarı (flash) mesajları da kullanıcı dostu bir şekilde kapatılabilir (`alert-dismissible`) yapıya bürünmüştür.
+
+---
+
+## 🔮 10. Gelecek Geliştirme Adımları
 
 Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan işler şunlardır:
 1. **Ders Programı Modülü (ClassSchedule):** Öğrencilerin ve akademik personelin haftalık ders programlarını görebileceği veritabanı tablolarının ve arayüzünün oluşturulması.
@@ -202,7 +220,6 @@ Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan
 
 ---
 
-## 📈 9. Sonuç ve Değerlendirme
+## 📈 11. Sonuç ve Değerlendirme
 
-**GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Son oturumla birlikte entegre edilen profil yönetimi, güvenli CRUD akışları, sahiplik yetki kontrolleri ve sayfalama sistemi sayesinde uygulamanın omurgası tamamlanmıştır. Yazılan otomatik birim testleri sistemin yüksek kalitede ve hatasız çalıştığını güvence altına almaktadır. Modüler Blueprint tasarımı projenin gelecekte rahatça büyümesine imkan tanımaktadır.
-
+**GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Son oturumla birlikte entegre edilen profil yönetimi, güvenli CRUD akışları, yetki kontrolleri, sayfalama sistemi ve gelişmiş test altyapısı sayesinde uygulamanın omurgası tamamlanmış ve üretime (production) hazır hale gelmiştir. Yazılan in-memory otomatik birim testleri sistemin yüksek kalitede ve hatasız çalıştığını güvence altına almaktadır. Modüler Blueprint tasarımı projenin gelecekte rahatça büyümesine imkan tanımaktadır.

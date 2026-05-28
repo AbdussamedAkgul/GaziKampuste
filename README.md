@@ -106,13 +106,12 @@ Projede sadece aşağıda belirtilen temel kütüphaneler kullanılmıştır:
 
 ## 🧪 Otomatik Testlerin Çalıştırılması (Birim Testleri)
 
-Projedeki profil, CRUD, yetki sahiplik ve sayfalama mantığını test eden birim testlerini yerelde koşturmak için aşağıdaki komutu çalıştırabilirsiniz:
+Projeyi "production" seviyesine taşımak için kapsamlı bir test altyapısı mevcuttur. Testler, gerçek veritabanını bozmamak adına `in-memory SQLite` (`sqlite:///:memory:`) izole ortamında koşturulur. 
+
+Tüm birim testlerini (CRUD yetkileri, şifreleme mantığı, giriş/kayıt senaryoları) tek bir komutla ve detaylı (verbose) rapor alarak çalıştırmak için terminalde şu komutu girebilirsiniz:
+
 ```bash
-python -m unittest tests/test_crud_profile.py
-```
-Veya testleri daha detaylı (verbose) raporlamak için:
-```bash
-python -m unittest -v tests/test_crud_profile.py
+pytest -v tests/
 ```
 
 ---

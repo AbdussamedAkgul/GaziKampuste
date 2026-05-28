@@ -16,22 +16,38 @@
                 <div class="logo-text">Gazi<span>Kampüste</span></div>
             </a>
             <nav>
-                <a href="{{ url_for('main.index') }}" class="{% if request.blueprint == 'main' and request.endpoint == 'main.index' %}active{% endif %}">Ana Sayfa</a>
-                <a href="{{ url_for('main.menus_list') }}" class="{% if request.endpoint == 'main.menus_list' %}active{% endif %}">Yemekhane</a>
-                <a href="{{ url_for('main.announcements_list') }}" class="{% if request.endpoint == 'main.announcements_list' %}active{% endif %}">Duyurular</a>
+                <a href="{{ url_for('main.index') }}" class="{% if request.blueprint == 'main' and request.endpoint == 'main.index' %}active{% endif %}">{{ _('Ana Sayfa') }}</a>
+                <a href="{{ url_for('main.menus_list') }}" class="{% if request.endpoint == 'main.menus_list' %}active{% endif %}">{{ _('Yemekhane') }}</a>
+                <a href="{{ url_for('main.announcements_list') }}" class="{% if request.endpoint == 'main.announcements_list' %}active{% endif %}">{{ _('Duyurular') }}</a>
+                
+                <form action="{{ url_for('main.search') }}" method="GET" class="d-flex align-items-center ms-3 me-3" style="margin-bottom: 0;">
+                    <input class="form-control form-control-sm me-2" type="search" placeholder="{{ _('Ara...') }}" aria-label="Search" name="q" value="{{ request.args.get('q', '') }}" style="border-radius: 20px;">
+                    <button class="btn btn-sm btn-outline-primary" type="submit" style="border-radius: 20px;">{{ _('Ara') }}</button>
+                </form>
+
+                <div class="dropdown me-3">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 20px;">
+                        <i class="bi bi-globe"></i> {{ session.get('language', 'tr').upper() }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang='tr') }}">TR - Türkçe</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('main.set_language', lang='en') }}">EN - English</a></li>
+                    </ul>
+                </div>
+
                 {% if current_user.is_authenticated %}
                     <a href="{{ url_for('main.profile') }}" class="{% if request.endpoint == 'main.profile' %}active{% endif %} d-inline-flex align-items-center gap-2 text-decoration-none" style="background: transparent !important; padding: 0;">
                         <span class="user-greeting d-flex align-items-center gap-2">
                             <div class="nav-avatar" style="width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 1.5px solid var(--accent-color); display: inline-block;">
                                 <img src="{{ url_for('static', filename='avatars/' + current_user.avatar_file) }}" alt="{{ current_user.username }}" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
-                            <span>Merhaba, <strong>{{ current_user.username }}</strong></span>
+                            <span>{{ _('Merhaba') }}, <strong>{{ current_user.username }}</strong></span>
                         </span>
                     </a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn-logout">Çıkış Yap</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn-logout">{{ _('Çıkış Yap') }}</a>
                 {% else %}
-                    <a href="{{ url_for('auth.register') }}" class="{% if request.blueprint == 'auth' and request.endpoint == 'auth.register' %}active{% endif %}">Kayıt Ol</a>
-                    <a href="{{ url_for('auth.login') }}" class="btn-login">Giriş Yap</a>
+                    <a href="{{ url_for('auth.register') }}" class="{% if request.blueprint == 'auth' and request.endpoint == 'auth.register' %}active{% endif %}">{{ _('Kayıt Ol') }}</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn-login">{{ _('Giriş Yap') }}</a>
                 {% endif %}
             </nav>
         </div>

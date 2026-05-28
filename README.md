@@ -35,18 +35,24 @@ app/
       register.html
       reset_password_request.html
       reset_password.html
+    search_results.html # Arama sonuçları listeleme sayfası [YENİ]
   static/            # CSS ve görsel dosyaları
     css/
       style.css      # Özelleştirilmiş dark-glassmorphism CSS
-    avatars/         # Kullanıcı profil fotoğrafları klasörü [YENİ]
+    avatars/         # Kullanıcı profil fotoğrafları klasörü
       default.jpg    # Varsayılan kullanıcı avatarı
+  translations/      # Flask-Babel Çeviri dosyaları [YENİ]
+    en/LC_MESSAGES/
+      messages.po
+      messages.mo
 docs/
   yapay_zeka_gunlugu.md # Yapay Zeka Günlüğü (AI Log)
   proje_raporu.md       # Proje Raporu (Project Report)
 migrations/          # Flask-Migrate veritabanı göç dosyaları
 tests/               # Birim ve entegrasyon testleri
-  test_crud_profile.py # CRUD, Profil ve Sayfalama Otomatik Testleri [YENİ]
+  test_crud_profile.py # CRUD, Profil ve Sayfalama Otomatik Testleri
 config.py            # Uygulama yapılandırma parametreleri
+babel.cfg            # Babel çeviri yapılandırması [YENİ]
 requirements.txt     # Gerekli Python kütüphaneleri listesi
 .env.example         # Örnek çevre değişkenleri şablonu
 .env                 # Yerel çevre değişkenleri (Veritabanı URI, Gizli Anahtar vb.)

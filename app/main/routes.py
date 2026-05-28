@@ -1,10 +1,11 @@
 import os
 import time
 from datetime import date
-from flask import render_template, redirect, url_for, flash, request, abort, current_app
+from flask import render_template, redirect, url_for, flash, request, abort, current_app, session
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
+from sqlalchemy import or_
 from app import db
 from app.main import main
 from app.main.forms import ProfileForm, CafeteriaMenuForm, AnnouncementForm
@@ -227,6 +228,41 @@ def delete_announcement(id):
     else:
         flash('Güvenlik doğrulaması başarısız oldu.', 'danger')
     return redirect(url_for('main.announcements_list'))
+
+@main.route('/search')
+def search():
+    q = request.args.get('q', '').strip()
+    if not q:
+        return redirect(url_for('main.index'))
+    
+    # Duyurularda arama
+    announcements = db.session.scalars(
+        db.select(Announcement).where(
+            or_(
+                Announcement.title.ilike(f'%{q}%'),
+                Announcement.content.ilike(f'%{q}%')
+            )
+        ).order_by(Announcement.date.desc())
+    ).all()
+
+    # Menülerde arama (çorba, ana yemek veya yan lezzet)
+    menus = db.session.scalars(
+        db.select(CafeteriaMenu).where(
+            or_(
+                CafeteriaMenu.soup.ilike(f'%{q}%'),
+                CafeteriaMenu.main_dish.ilike(f'%{q}%'),
+                CafeteriaMenu.side_dish.ilike(f'%{q}%')
+            )
+        ).order_by(CafeteriaMenu.date.desc())
+    ).all()
+
+    return render_template('search_results.html', query=q, announcements=announcements, menus=menus)
+
+@main.route('/set_language/<lang>')
+def set_language(lang):
+    if lang in current_app.config['LANGUAGES']:
+        session['language'] = lang
+    return redirect(request.referrer or url_for('main.index'))
 
 @main.app_errorhandler(404)
 def not_found_error(error):

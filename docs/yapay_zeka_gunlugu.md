@@ -166,4 +166,34 @@ Kullanıcı profil yönetimi (avatar resmi yükleme ve güncelleme), CafeteriaMe
 * Güvensiz silme işlemlerinin önüne geçmek için POST metodunu ve CSRF token doğrulamasını harmanlayarak güvenli veri silme pratiklerini uyguladım.
 * SQLAlchemy `paginate()` yapısını ve Jinja2 şablonlarında döngüsel sayfa numaralandırmalarını yönetmeyi öğrendim.
 
+---
+
+### 📅 Günlük Kaydı: 28 Mayıs 2026 (5. Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Mobil uygulamanın tüketebilmesi için API Blueprint oluşturulması, platform geneli için SQLAlchemy destekli Full Text Search (Tam Metin Arama) entegrasyonu ve uygulamanın Flask-Babel ile çift dilli (Türkçe-İngilizce) hale getirilmesi.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "Bağlam: GaziKampuste projemizin 5. oturumundayız. Kimlik doğrulama, CRUD işlemleri ve profil (avatar) altyapımız kusursuz çalışıyor. Bu oturumda projeye 3 adet gelişmiş özellik ekleyeceğiz: API endpoint'leri, Tam Metin Arama (Search) ve Çift Dilli Arayüz (Babel).
+> 
+> Hedef:
+> 1. API Endpoint'leri: Mobil uygulamanın ileride tüketebilmesi için app/api/v1/ blueprint'i oluştur. /api/v1/menus ve /api/v1/announcements rotalarını yazarak verileri JSON formatında (jsonify kullanarak) döndür.
+> 2. Arama Özelliği (Search): Navbar'a bir arama çubuğu ekle. Kullanıcı arama yaptığında, SQLAlchemy'nin .ilike() (veya .like()) metodunu kullanarak Duyurular (başlık veya içerik) ve Menüler içinde arama yapıp sonuçları /search_results sayfasında göstersin.
+> 3. İki Dilli Arayüz: Projeye Flask-Babel kütüphanesini entegre et. Uygulamanın varsayılan dilini Türkçe (tr) yap, İngilizce (en) seçeneği ekle. Navbar'da dil değiştirmek için bir buton olsun. HTML şablonlarındaki ana başlıkları (örneğin "Giriş Yap", "Kayıt Ol", "Duyurular") çevrilebilir hale getir (gettext veya _() ile sar).
+> 
+> Kısıtlar:
+> - API endpoint'leri kesinlikle listeleme yaparken şifre (password_hash) gibi hassas verileri dışarı sızdırmamalı, sadece menü ve duyuru detaylarını dönmeli.
+> - Arama işlemi için raw SQL (saf SQL) KESİNLİKLE kullanma, SQL Injection açıklarını engellemek adına sadece ORM (SQLAlchemy) metodlarını kullan.
+> - Flask-Babel kurulumu için babel.cfg dosyasının oluşturulması ve çeviri (pybabel extract/init/compile) komutlarının terminalde nasıl çalıştırılacağı planın içinde adım adım anlatılmalı."
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **API Mimarisi**: `app/api/v1` adında yeni bir blueprint oluşturularak JSON döndüren `/menus` ve `/announcements` rotaları tanımlandı. Hassas veriler dışarıda bırakıldı.
+2. **Güvenli Arama**: SQLAlchemy ORM'in `or_` ve `ilike` fonksiyonları harmanlanarak `app/main/routes.py` içine arama motoru rotası eklendi ve sonuçlar `search_results.html` şablonuyla listelendi.
+3. **Çoklu Dil (Babel)**: `Flask-Babel` projeye eklendi, `config.py` içerisinde diller yapılandırıldı. Jinja2 şablonlarında anahtar kelimeler `_()` ile sarıldı. Terminalde `pybabel` komutlarıyla İngilizce (.po ve .mo) çeviriler derlendi ve Navbar'a dil seçim butonu eklendi.
+
+#### 💡 Kazanım:
+* Flask tabanlı uygulamalarda dış dünyayla (mobil uygulamalar vb.) konuşmak üzere güvenli JSON API Endpoint'lerinin nasıl oluşturulacağını öğrendim.
+* Güvenlik açıklarını önlemek amacıyla SQL Injection risklerinden uzak, SQLAlchemy ORM seviyesinde tam metin araması kodlamayı uyguladım.
+* Projelerin çok dilli yapıya (i18n) kavuşturulması için Flask-Babel kütüphanesinin çalışma mantığını (extract, init, compile) deneyimledim.
+
 

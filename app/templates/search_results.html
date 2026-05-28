@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Arama Sonuçları - GaziKampüste{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h2 class="mb-4">"{{ query }}" için Arama Sonuçları</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <h4 class="mb-3">Bulunan Duyurular <span class="badge bg-primary rounded-pill">{{ announcements|length }}</span></h4>
+        {% if announcements %}
+            <div class="list-group">
+                {% for announcement in announcements %}
+                    <a href="{{ url_for('main.announcements_list') }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 text-primary">{{ announcement.title }}</h5>
+                            <small class="text-muted">{{ announcement.date.strftime('%d.%m.%Y') }}</small>
+                        </div>
+                        <p class="mb-1 text-truncate">{{ announcement.content }}</p>
+                        <small class="text-muted">Yazar: {{ announcement.author.username }}</small>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Eşleşen duyuru bulunamadı.</p>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <h4 class="mb-3">Bulunan Menüler <span class="badge bg-success rounded-pill">{{ menus|length }}</span></h4>
+        {% if menus %}
+            <div class="list-group">
+                {% for menu in menus %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 text-success">{{ menu.date.strftime('%d.%m.%Y') }} Menüsü</h5>
+                            <small class="text-muted">{{ menu.menu_type|capitalize }}</small>
+                        </div>
+                        <p class="mb-1">
+                            <strong>Çorba:</strong> {{ menu.soup }}<br>
+                            <strong>Ana Yemek:</strong> {{ menu.main_dish }}<br>
+                            <strong>Yan Lezzet:</strong> {{ menu.side_dish }}
+                        </p>
+                        {% if menu.calories %}
+                            <small class="text-muted">{{ menu.calories }} kcal</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Eşleşen menü bulunamadı.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

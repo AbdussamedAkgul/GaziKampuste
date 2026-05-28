@@ -179,7 +179,22 @@ Geliştirilen tüm CRUD yetkilendirme akışlarını, profile resim yükleme kur
 
 ---
 
-## 🔮 8. Gelecek Geliştirme Adımları
+## 🚀 8. İleri Seviye Özellikler: API, Arama ve Çoklu Dil (5. Oturum)
+
+Uygulamanın erişilebilirliğini ve kullanımını artırmak için 3 yeni ileri seviye entegrasyon eklenmiştir:
+
+### 📡 API Blueprint ve Mobil Uyumluluk
+Gelecekte geliştirilebilecek mobil uygulamaların (Flutter, React Native vb.) veri çekebilmesi için ayrı bir `api_v1` blueprint modülü oluşturulmuştur. `/api/v1/menus` ve `/api/v1/announcements` rotaları üzerinden veriler güvenli bir şekilde (kullanıcı şifreleri gizlenerek) `JSON` formatında servis edilmektedir.
+
+### 🔍 Tam Metin Arama (Full Text Search)
+Kullanıcıların platformda aradıklarına hızlıca ulaşabilmesi için Navbar'a bir arama motoru entegre edilmiştir. Güvenlik zafiyetlerini (SQL Injection) önlemek adına raw SQL sorguları yerine tamamen güvenli SQLAlchemy ORM metotları (`or_()`, `.ilike()`) kullanılmıştır. Arama sonuçları `search_results.html` özel şablonunda gruplandırılarak listelenmektedir.
+
+### 🌐 İki Dilli Arayüz (Babel - i18n)
+Uygulama küresel standartlara taşınarak `Flask-Babel` kütüphanesi entegrasyonuyla çok dilli (Türkçe - İngilizce) hale getirilmiştir. Navbar'da yer alan dil değiştirici sayesinde anında dil seçimi yapılabilir. Çeviriler `babel.cfg` yapılandırması üzerinden derlenmiş `.po` ve `.mo` dosyalarıyla sağlanmaktadır.
+
+---
+
+## 🔮 9. Gelecek Geliştirme Adımları
 
 Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan işler şunlardır:
 1. **Ders Programı Modülü (ClassSchedule):** Öğrencilerin ve akademik personelin haftalık ders programlarını görebileceği veritabanı tablolarının ve arayüzünün oluşturulması.

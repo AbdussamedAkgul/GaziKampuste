@@ -1,16 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Sunucu Hatası - GaziKampuste Yönetim Sistemi{% endblock %}
+{% block title %}{{ _('Sunucu Hatası') }} - GaziKampüste Yönetim Sistemi{% endblock %}
 
 {% block content %}
-<div style="text-align: center; padding: 50px 20px;">
-    <h2 style="font-size: 72px; color: #dc3545; margin: 0;">500</h2>
-    <h3 style="font-size: 24px; color: #333; margin-top: 10px;">Beklenmedik Bir Hata Oluştu</h3>
-    <p style="color: #666; max-width: 500px; margin: 20px auto;">
-        Sunucuda beklenmeyen bir hata meydana geldi. Sorunu en kısa sürede çözmek için çalışıyoruz. Lütfen daha sonra tekrar deneyin.
-    </p>
-    <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 10px;">
-        Ana Sayfaya Dön
-    </a>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 text-center">
+            <div class="card border-0 shadow-sm rounded-4 bg-glass">
+                <div class="card-body p-5">
+                    <h1 class="display-1 fw-bold text-danger mb-0">500</h1>
+                    <h2 class="h3 mb-3 text-white">{{ _('Beklenmedik Bir Hata Oluştu') }}</h2>
+                    <p class="text-secondary mb-4">
+                        {{ _('Sunucuda beklenmeyen bir hata meydana geldi. Sorunu en kısa sürede çözmek için çalışıyoruz. Lütfen daha sonra tekrar deneyin.') }}
+                    </p>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-primary rounded-pill px-4 py-2">
+                        <i class="bi bi-house-door me-2"></i> {{ _('Ana Sayfaya Dön') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .bg-glass {
+        background-color: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+</style>
 {% endblock %}

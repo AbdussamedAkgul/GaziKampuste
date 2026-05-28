@@ -196,4 +196,30 @@ Mobil uygulamanın tüketebilmesi için API Blueprint oluşturulması, platform 
 * Güvenlik açıklarını önlemek amacıyla SQL Injection risklerinden uzak, SQLAlchemy ORM seviyesinde tam metin araması kodlamayı uyguladım.
 * Projelerin çok dilli yapıya (i18n) kavuşturulması için Flask-Babel kütüphanesinin çalışma mantığını (extract, init, compile) deneyimledim.
 
+---
 
+### 📅 Günlük Kaydı: 28 Mayıs 2026 (6. Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Projenin üretime (production) hazır hale getirilmesi için test altyapısının kurulması, hata yönetiminin (404, 500 sayfalarının) iyileştirilmesi ve mobil uyumluluk (responsive) kontrollerinin tamamlanması.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "Bağlam: GaziKampuste projemizin 6. oturumundayız. Temel tüm özellikler, CRUD, API ve çoklu dil çalışıyor. Şimdi uygulamayı üretime (production) ve hocanın testine hazırlayacağız. pytest ve flask-testing kurulu (değilse requirements.txt'ye ekle).
+> 
+> Hedef:
+> 1. Hata Yönetimi: app/main/routes.py içinde 404 ve 500 hataları için özel yakalayıcılar yaz. Bu hatalar için Bootstrap 5 ile şık, mobil uyumlu ve sitemizin temasına uygun 404.html ve 500.html şablonları tasarla.
+> 2. Test Yazımı: tests/ klasörü altında şu test mimarisini kur:
+>    - tests/conftest.py: Test client'ı ve in-memory (hafızada çalışan) SQLite veritabanı fixture'ı ayarla.
+>    - tests/test_auth.py: Kayıt olma ve giriş yapma akışlarını test et.
+>    - tests/test_models.py: User modelindeki şifre metotlarının doğru çalıştığını test et.
+> 3. UI/UX Makyajı: Tüm sayfalardaki flash mesajlarının Bootstrap "alert-dismissible" yapısında olduğundan emin ol. Tabloların (menü ve duyuru listeleri) mobil görünümlerde taşmaması için eksikleri gider."
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **Test Altyapısı**: `tests/conftest.py` dosyası oluşturuldu. Gerçek veritabanını bozmamak adına `sqlite:///:memory:` (hafıza tabanlı geçici veritabanı) kullanıldı ve her test için temiz bir tablo sağlandı. `test_models.py` ve `test_auth.py` ile birim testleri (şifre doğrulama, başarılı/başarısız giriş senaryoları) yazıldı.
+2. **Kapsamlı Hata Sayfaları**: 404 ve 500 sayfaları, eski satıriçi (inline) stillerinden arındırılarak sitenin genel `glassmorphism` tasarımına uyan Bootstrap 5 kart yapısıyla modernleştirildi.
+3. **UI/UX ve Mobil Uyumluluk**: Menü ve duyuru listelerinin tablo değil, CSS Grid kart yapısıyla oluşturulduğu analiz edildi. Mobil cihazlarda (`340px` ve altı) yaşanabilecek taşmaları önlemek için `style.css` içindeki `grid-template-columns` alanına `min(100%, 340px)` dinamik formülü eklendi. Uyarı (flash) mesajlarının `alert-dismissible` yapısında olduğu teyit edildi.
+
+#### 💡 Kazanım:
+* Uygulamanın üretime alınmadan önce "in-memory" (hafızada) izole bir veritabanı ile nasıl güvenle test edileceğini (Pytest & Flask-Testing) öğrendim.
+* Arayüzdeki (Grid sistemi) mobil taşma (overflow) sorunlarını CSS fonksiyonları (`min()`) ile çözmeyi kavradım.
+* Uygulama çapındaki hata sayfalarının (404/500) tasarım bütünlüğünün kullanıcı deneyimine (UX) etkisini gözlemledim.

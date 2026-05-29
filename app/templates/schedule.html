@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Ders Programı - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">📅 Haftalık Ders Programı</h2>
+</div>
+
+<div class="card p-4">
+    <ul class="nav nav-tabs" id="scheduleTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="sinif1-tab" data-bs-toggle="tab" data-bs-target="#sinif1" type="button" role="tab">1. Sınıf</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="sinif2-tab" data-bs-toggle="tab" data-bs-target="#sinif2" type="button" role="tab">2. Sınıf</button>
+        </li>
+    </ul>
+    
+    <div class="tab-content mt-4" id="scheduleTabsContent">
+        <!-- 1. Sınıf Programı -->
+        <div class="tab-pane fade show active" id="sinif1" role="tabpanel">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle" style="color: var(--text-primary); border-color: rgba(255,255,255,0.1);">
+                    <thead style="background: rgba(255,255,255,0.05);">
+                        <tr>
+                            <th>Saat</th>
+                            <th>Pazartesi</th>
+                            <th>Salı</th>
+                            <th>Çarşamba</th>
+                            <th>Perşembe</th>
+                            <th>Cuma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>09:20 - 11:45</strong></td>
+                            <td>-</td>
+                            <td>MOS 111 Zaman Yönetimi<br><small class="text-secondary">Derslik 106</small></td>
+                            <td>BLG 109 İşletim Sist.<br><small class="text-secondary">LAB-4</small></td>
+                            <td>BLG 101 Algoritma<br><small class="text-secondary">LAB-2</small></td>
+                            <td>ENG 101 İngilizce - I<br><small class="text-secondary">Derslik 106</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:50 - 14:15</strong></td>
+                            <td>BLG 103 Web Programlama<br><small class="text-secondary">LAB-1</small></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>13:30 - 15:55</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>BLG 107 Bilgisayar Ağları<br><small class="text-secondary">LAB-1</small></td>
+                            <td>BLG 105 Siber Güvenlik<br><small class="text-secondary">LAB-5</small></td>
+                            <td>MOS 107 Girişimcilik<br><small class="text-secondary">Derslik 105</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>14:20 - 16:45</strong></td>
+                            <td>-</td>
+                            <td>ISG 101 İş Sağlığı<br><small class="text-secondary">Derslik 106</small></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>20:30 - 21:20</strong></td>
+                            <td>TUR 101 Türk Dili-I</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>TAR 101 Atatürk İlkeleri</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. Sınıf Programı -->
+        <div class="tab-pane fade" id="sinif2" role="tabpanel">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle" style="color: var(--text-primary); border-color: rgba(255,255,255,0.1);">
+                    <thead style="background: rgba(255,255,255,0.05);">
+                        <tr>
+                            <th>Saat</th>
+                            <th>Pazartesi</th>
+                            <th>Salı</th>
+                            <th>Çarşamba</th>
+                            <th>Perşembe</th>
+                            <th>Cuma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>09:20 - 11:45</strong></td>
+                            <td>MS 102 Bilgisayar Donanımı<br><small class="text-secondary">LAB-1</small></td>
+                            <td>BLG 211 Siber Saldırı<br><small class="text-secondary">LAB-5</small></td>
+                            <td>BLG 205 Veritabanı U.<br><small class="text-secondary">LAB-6</small></td>
+                            <td>MS 204 Sayısal Filigranlama<br><small class="text-secondary">LAB-3</small></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:50 - 13:25</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>MS 106 Bilişim Hukuku<br><small class="text-secondary">Derslik 107</small></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>12:40 - 15:05</strong></td>
+                            <td>BLG 203 İleri Ağ Tek.<br><small class="text-secondary">LAB-3</small></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>13:30 - 15:05</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>MS 114 E-Ticaret<br><small class="text-secondary">Derslik 106</small></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>13:30 - 15:55</strong></td>
+                            <td>-</td>
+                            <td>BLG 209 İnternet Prog.<br><small class="text-secondary">LAB-3</small></td>
+                            <td>BLG 207 Kriptoloji<br><small class="text-secondary">LAB-6</small></td>
+                            <td>-</td>
+                            <td>ENG 201 İngilizce - III<br><small class="text-secondary">Derslik 106</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.nav-tabs {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.nav-tabs .nav-link {
+    color: var(--text-secondary);
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+}
+.nav-tabs .nav-link:hover {
+    color: var(--text-primary);
+    border-color: transparent;
+}
+.nav-tabs .nav-link.active {
+    color: var(--accent-color);
+    background: transparent;
+    border-color: transparent;
+    border-bottom: 2px solid var(--accent-color);
+}
+.table td, .table th {
+    background-color: transparent;
+}
+.table-hover tbody tr:hover td {
+    background-color: rgba(255,255,255,0.02);
+}
+</style>
+{% endblock %}

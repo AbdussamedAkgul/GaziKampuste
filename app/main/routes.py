@@ -8,8 +8,9 @@ from werkzeug.utils import secure_filename
 from sqlalchemy import or_
 from app import db
 from app.main import main
-from app.main.forms import ProfileForm, CafeteriaMenuForm, AnnouncementForm
-from app.models import User, CafeteriaMenu, Announcement
+from app.main.forms import ProfileForm, CafeteriaMenuForm, AnnouncementForm, EventForm
+from app.models import User, CafeteriaMenu, Announcement, Event
+from app.decorators import admin_required
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -21,27 +22,14 @@ def index():
     today = date.today()
     normal_menu = db.session.scalar(
         db.select(CafeteriaMenu).where(
-            CafeteriaMenu.date == today,
-            CafeteriaMenu.menu_type == 'normal'
-        )
-    )
-    veg_menu = db.session.scalar(
-        db.select(CafeteriaMenu).where(
-            CafeteriaMenu.date == today,
-            CafeteriaMenu.menu_type == 'vegetarian'
+            CafeteriaMenu.date == today
         )
     )
     
     # Fallback to the latest menus if today's menu isn't entered yet
     if normal_menu is None:
         normal_menu = db.session.scalars(
-            db.select(CafeteriaMenu).where(CafeteriaMenu.menu_type == 'normal')
-            .order_by(CafeteriaMenu.date.desc())
-        ).first()
-    if veg_menu is None:
-        veg_menu = db.session.scalars(
-            db.select(CafeteriaMenu).where(CafeteriaMenu.menu_type == 'vegetarian')
-            .order_by(CafeteriaMenu.date.desc())
+            db.select(CafeteriaMenu).order_by(CafeteriaMenu.date.desc())
         ).first()
         
     # Get latest 3 announcements
@@ -49,7 +37,7 @@ def index():
         db.select(Announcement).order_by(Announcement.date.desc(), Announcement.id.desc()).limit(3)
     ).all()
     
-    return render_template('index.html', normal_menu=normal_menu, veg_menu=veg_menu, announcements=latest_announcements)
+    return render_template('index.html', normal_menu=normal_menu, announcements=latest_announcements)
 
 @main.route('/profile', methods=['GET', 'POST'])
 @login_required
@@ -104,12 +92,12 @@ def menus_list():
 
 @main.route('/menu/add', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def add_menu():
     form = CafeteriaMenuForm()
     if form.validate_on_submit():
         menu = CafeteriaMenu(
             date=form.date.data,
-            menu_type=form.menu_type.data,
             soup=form.soup.data,
             main_dish=form.main_dish.data,
             side_dish=form.side_dish.data,
@@ -124,15 +112,13 @@ def add_menu():
 
 @main.route('/menu/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def edit_menu(id):
     menu = db.get_or_404(CafeteriaMenu, id)
-    if menu.author != current_user:
-        abort(403)
         
     form = CafeteriaMenuForm()
     if form.validate_on_submit():
         menu.date = form.date.data
-        menu.menu_type = form.menu_type.data
         menu.soup = form.soup.data
         menu.main_dish = form.main_dish.data
         menu.side_dish = form.side_dish.data
@@ -142,7 +128,6 @@ def edit_menu(id):
         return redirect(url_for('main.menus_list'))
     elif request.method == 'GET':
         form.date.data = menu.date
-        form.menu_type.data = menu.menu_type
         form.soup.data = menu.soup
         form.main_dish.data = menu.main_dish
         form.side_dish.data = menu.side_dish
@@ -152,10 +137,9 @@ def edit_menu(id):
 
 @main.route('/menu/<int:id>/delete', methods=['POST'])
 @login_required
+@admin_required
 def delete_menu(id):
     menu = db.get_or_404(CafeteriaMenu, id)
-    if menu.author != current_user:
-        abort(403)
         
     form = FlaskForm()
     if form.validate_on_submit():
@@ -178,6 +162,7 @@ def announcements_list():
 
 @main.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def add_announcement():
     form = AnnouncementForm()
     if form.validate_on_submit():
@@ -195,10 +180,9 @@ def add_announcement():
 
 @main.route('/announcement/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def edit_announcement(id):
     announcement = db.get_or_404(Announcement, id)
-    if announcement.author != current_user:
-        abort(403)
         
     form = AnnouncementForm()
     if form.validate_on_submit():
@@ -215,10 +199,9 @@ def edit_announcement(id):
 
 @main.route('/announcement/<int:id>/delete', methods=['POST'])
 @login_required
+@admin_required
 def delete_announcement(id):
     announcement = db.get_or_404(Announcement, id)
-    if announcement.author != current_user:
-        abort(403)
         
     form = FlaskForm()
     if form.validate_on_submit():
@@ -234,6 +217,8 @@ def search():
     q = request.args.get('q', '').strip()
     if not q:
         return redirect(url_for('main.index'))
+    
+    q_lower = q.lower()
     
     # Duyurularda arama
     announcements = db.session.scalars(
@@ -255,14 +240,62 @@ def search():
             )
         ).order_by(CafeteriaMenu.date.desc())
     ).all()
+    
+    # Diğer (Statik) Sayfalarda Arama Algoritması
+    static_pages = [
+        {
+            "title": "Akademik Takvim",
+            "url": url_for("main.academic_calendar"),
+            "description": "Dönem başı, dönem sonu ve kayıt haftalarını içeren takvim.",
+            "keywords": ["akademik", "takvim", "güz", "bahar", "tatil", "ders", "kayıt"]
+        },
+        {
+            "title": "Sınav Takvimi",
+            "url": url_for("main.exam_schedule"),
+            "description": "Vize ve final sınav saatlerini içeren haftalık sınav programı.",
+            "keywords": ["sınav", "vize", "final", "program", "saat", "takvim"]
+        },
+        {
+            "title": "Profil",
+            "url": url_for("main.profile"),
+            "description": "Kullanıcı hesap bilgileri, şifre ve avatar güncelleme ekranı.",
+            "keywords": ["profil", "hesap", "ayarlar", "şifre", "avatar", "kullanıcı", "resim"]
+        },
+        {
+            "title": "Ana Sayfa",
+            "url": url_for("main.index"),
+            "description": "Sitenin ana sayfası.",
+            "keywords": ["ana sayfa", "giriş", "home"]
+        }
+    ]
+    
+    static_results = []
+    for page in static_pages:
+        # Eğer sorgu direkt sayfa adında geçiyorsa veya keywordlerde varsa
+        if q_lower in page["title"].lower() or any(q_lower in kw for kw in page["keywords"]):
+            static_results.append(page)
 
-    return render_template('search_results.html', query=q, announcements=announcements, menus=menus)
+    return render_template('search_results.html', query=q, announcements=announcements, menus=menus, static_results=static_results)
 
 @main.route('/set_language/<lang>')
 def set_language(lang):
     if lang in current_app.config['LANGUAGES']:
         session['language'] = lang
     return redirect(request.referrer or url_for('main.index'))
+
+@main.route('/schedule')
+def schedule():
+    return render_template('schedule.html')
+
+# Academic Calendar
+@main.route('/academic-calendar')
+def academic_calendar():
+    return render_template('academic_calendar.html')
+
+# Exam Schedule
+@main.route('/exam-schedule')
+def exam_schedule():
+    return render_template('exam_schedule.html')
 
 @main.app_errorhandler(404)
 def not_found_error(error):

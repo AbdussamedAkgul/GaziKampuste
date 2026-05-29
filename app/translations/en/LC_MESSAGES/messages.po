@@ -54,3 +54,152 @@ msgstr "Register"
 msgid "Giriş Yap"
 msgstr "Login"
 
+msgid "Gazi Üniversitesi Kampüs"
+msgstr "Gazi University Campus"
+
+msgid "Yönetim Sistemi"
+msgstr "Management System"
+
+msgid ""
+"Öğrenciler ve personel için yemekhane menüsü takibi, ders programı "
+"bilgilendirmesi ve anlık duyurular tek bir güvenli panelde."
+msgstr ""
+"Cafeteria menu tracking, course schedule updates, and instant "
+"announcements for students and staff in a single secure panel."
+
+msgid "Profilimi Yönet"
+msgstr "Manage My Profile"
+
+msgid "Yemekhane Menüsü"
+msgstr "Cafeteria Menu"
+
+msgid "Günün Yemekhane Menüsü"
+msgstr "Today's Cafeteria Menu"
+
+msgid "Çorba"
+msgstr "Soup"
+
+msgid "Ana Yemek"
+msgstr "Main Dish"
+
+msgid "Yardımcı Yemek"
+msgstr "Side Dish"
+
+msgid "Toplam Enerji"
+msgstr "Total Energy"
+
+msgid "Bugün için menü girişi yapılmamıştır."
+msgstr "No menu has been entered for today."
+
+msgid "Son Duyurular"
+msgstr "Latest Announcements"
+
+msgid "Henüz yayınlanmış bir duyuru bulunmamaktadır."
+msgstr "No announcements have been published yet."
+
+msgid "Yemekhane Menüleri"
+msgstr "Cafeteria Menus"
+
+msgid "Yeni Menü Ekle"
+msgstr "Add New Menu"
+
+msgid "Düzenle"
+msgstr "Edit"
+
+msgid "Sil"
+msgstr "Delete"
+
+msgid "Bu yemekhane menüsünü silmek istediğinize emin misiniz?"
+msgstr "Are you sure you want to delete this cafeteria menu?"
+
+msgid "Henüz eklenmiş bir yemekhane menüsü bulunmamaktadır."
+msgstr "No cafeteria menu has been added yet."
+
+msgid "Haberler ve Duyurular"
+msgstr "News and Announcements"
+
+msgid "Yeni Duyuru Ekle"
+msgstr "Add New Announcement"
+
+msgid "Henüz eklenmiş bir duyuru bulunmamaktadır."
+msgstr "No announcement has been added yet."
+
+msgid "Bu duyuruyu silmek istediğinize emin misiniz?"
+msgstr "Are you sure you want to delete this announcement?"
+
+msgid "Akademik Takvim"
+msgstr "Academic Calendar"
+
+msgid "Faaliyet"
+msgstr "Activity"
+
+msgid "Tarih"
+msgstr "Date"
+
+msgid "2025-2026 Güz Yarıyılı"
+msgstr "2025-2026 Fall Semester"
+
+msgid "Derslerin Başlaması"
+msgstr "Start of Classes"
+
+msgid "Derslerin Sona Ermesi"
+msgstr "End of Classes"
+
+msgid "2025-2026 Bahar Yarıyılı"
+msgstr "2025-2026 Spring Semester"
+
+msgid "Ara Sınavlar (Vize)"
+msgstr "Midterm Exams"
+
+msgid "Bahar Yarıyılı Ders Bitişi"
+msgstr "End of Spring Semester Classes"
+
+msgid "Yarıyıl Sonu Sınavları (Final)"
+msgstr "Final Exams"
+
+msgid "Ders Programı"
+msgstr "Course Schedule"
+
+msgid "Arama Sonuçları"
+msgstr "Search Results"
+
+msgid "İçin Arama Sonuçları"
+msgstr "Search Results For"
+
+msgid "İlgili Sayfalar"
+msgstr "Related Pages"
+
+msgid "Yazar:"
+msgstr "Author:"
+
+msgid "Eşleşen duyuru bulunamadı."
+msgstr "No matching announcement found."
+
+msgid "Yemek Menüleri"
+msgstr "Cafeteria Menus"
+
+msgid "Menüsü"
+msgstr "Menu"
+
+msgid "Çorba:"
+msgstr "Soup:"
+
+msgid "Ana Yemek:"
+msgstr "Main Dish:"
+
+msgid "Yan Lezzet:"
+msgstr "Side Dish:"
+
+msgid "Eşleşen menü bulunamadı."
+msgstr "No matching menu found."
+
+msgid "Sınav Takvimi"
+msgstr "Exam Schedule"
+
+msgid ""
+"2025-2026 EĞİTİM ÖĞRETİM YILI BAHAR DÖNEMİ BİLİŞİM GÜVENLİĞİ FİNAL SINAV "
+"PROGRAMI"
+msgstr ""
+"2025-2026 ACADEMIC YEAR SPRING SEMESTER INFORMATION SECURITY FINAL EXAM "
+"SCHEDULE"
+

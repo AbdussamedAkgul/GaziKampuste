@@ -5,48 +5,47 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="hero">
-    <h1>Gazi Üniversitesi Kampüs <span>Yönetim Sistemi</span></h1>
+    <h1>{{ _('Gazi Üniversitesi Kampüs') }} <span>{{ _('Yönetim Sistemi') }}</span></h1>
     <p>
-        Öğrenciler ve personel için yemekhane menüsü takibi, ders programı bilgilendirmesi ve anlık duyurular tek bir güvenli panelde.
+        {{ _('Öğrenciler ve personel için yemekhane menüsü takibi, ders programı bilgilendirmesi ve anlık duyurular tek bir güvenli panelde.') }}
     </p>
     <div class="hero-buttons">
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('main.profile') }}" class="btn btn-primary">Profilimi Yönet</a>
+            <a href="{{ url_for('main.profile') }}" class="btn btn-primary">{{ _('Profilimi Yönet') }}</a>
         {% else %}
-            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Yönetici Girişi</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Giriş Yap</a>
         {% endif %}
-        <a href="#yemekhane" class="btn btn-secondary">Yemekhane Menüsü</a>
+        <a href="#yemekhane" class="btn btn-secondary">{{ _('Yemekhane Menüsü') }}</a>
     </div>
 </section>
 
 <!-- Yemekhane Menüsü Bölümü -->
 <section id="yemekhane">
-    <h2 class="section-title">🍴 Günün Yemekhane Menüsü</h2>
+    <h2 class="section-title">🍴 {{ _('Günün Yemekhane Menüsü') }}</h2>
     <div class="grid-container">
-        <!-- Normal Menü Kartı -->
+        <!-- Günün Menüsü Kartı -->
         {% if normal_menu %}
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-tag tag-normal">Normal Menü</span>
-                    <span class="card-date">{{ normal_menu.date.strftime('%d %B %Y') }}</span>
+            <div class="card" style="margin: 0 auto; max-width: 600px;">
+                <div class="card-header text-center">
+                    <h5 class="mb-0 text-white" style="font-weight: 600;">{{ normal_menu.date.strftime('%d %B %Y') }}</h5>
                 </div>
                 <ul class="menu-items">
                     <li>
-                        <span class="menu-label">Çorba</span>
+                        <span class="menu-label">{{ _('Çorba') }}</span>
                         <span class="menu-val text-end">{{ normal_menu.soup }}</span>
                     </li>
                     <li>
-                        <span class="menu-label">Ana Yemek</span>
+                        <span class="menu-label">{{ _('Ana Yemek') }}</span>
                         <span class="menu-val text-end">{{ normal_menu.main_dish }}</span>
                     </li>
                     <li>
-                        <span class="menu-label">Yardımcı Yemek</span>
+                        <span class="menu-label">{{ _('Yardımcı Yemek') }}</span>
                         <span class="menu-val text-end">{{ normal_menu.side_dish }}</span>
                     </li>
                 </ul>
                 {% if normal_menu.calories %}
                     <div class="calories-box">
-                        <span>Toplam Enerji</span>
+                        <span>{{ _('Toplam Enerji') }}</span>
                         <strong>{{ normal_menu.calories }} kcal</strong>
                     </div>
                 {% endif %}
@@ -60,56 +59,8 @@
                 </div>
             </div>
         {% else %}
-            <div class="card text-center p-4">
-                <div class="card-header mb-3">
-                    <span class="card-tag tag-normal">Normal Menü</span>
-                </div>
-                <p class="text-secondary mb-0">Bugün için normal menü girişi yapılmamıştır.</p>
-            </div>
-        {% endif %}
-
-        <!-- Vejetaryen Menü Kartı -->
-        {% if veg_menu %}
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-tag tag-veg">Vejetaryen Menü</span>
-                    <span class="card-date">{{ veg_menu.date.strftime('%d %B %Y') }}</span>
-                </div>
-                <ul class="menu-items">
-                    <li>
-                        <span class="menu-label">Çorba</span>
-                        <span class="menu-val text-end">{{ veg_menu.soup }}</span>
-                    </li>
-                    <li>
-                        <span class="menu-label">Ana Yemek</span>
-                        <span class="menu-val text-end">{{ veg_menu.main_dish }}</span>
-                    </li>
-                    <li>
-                        <span class="menu-label">Yardımcı Yemek</span>
-                        <span class="menu-val text-end">{{ veg_menu.side_dish }}</span>
-                    </li>
-                </ul>
-                {% if veg_menu.calories %}
-                    <div class="calories-box">
-                        <span>Toplam Enerji</span>
-                        <strong>{{ veg_menu.calories }} kcal</strong>
-                    </div>
-                {% endif %}
-                <div class="card-footer">
-                    <div class="author-info">
-                        <div class="author-avatar" style="width: 24px; height: 24px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
-                            <img src="{{ url_for('static', filename='avatars/' + veg_menu.author.avatar_file) }}" alt="{{ veg_menu.author.username }}" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <span>{{ veg_menu.author.username }}</span>
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            <div class="card text-center p-4">
-                <div class="card-header mb-3">
-                    <span class="card-tag tag-veg">Vejetaryen Menü</span>
-                </div>
-                <p class="text-secondary mb-0">Bugün için vejetaryen menü girişi yapılmamıştır.</p>
+            <div class="card text-center p-4" style="margin: 0 auto; max-width: 600px;">
+                <p class="text-secondary mb-0">{{ _('Bugün için menü girişi yapılmamıştır.') }}</p>
             </div>
         {% endif %}
     </div>
@@ -117,7 +68,7 @@
 
 <!-- Son Duyurular Bölümü -->
 <section id="duyurular">
-    <h2 class="section-title">📢 Son Duyurular</h2>
+    <h2 class="section-title">📢 {{ _('Son Duyurular') }}</h2>
     {% if announcements %}
         <div class="grid-container">
             {% for announcement in announcements %}
@@ -127,8 +78,8 @@
                             <span class="card-date">{{ announcement.date.strftime('%d %B %Y') }}</span>
                         </div>
                         <h3 class="announcement-title">{{ announcement.title }}</h3>
-                        <p class="announcement-content">
-                            {{ announcement.content }}
+                        <p class="announcement-content" style="white-space: pre-wrap;">
+                            {{ announcement.content | safe }}
                         </p>
                     </div>
                     <div class="card-footer mt-auto">
@@ -144,7 +95,7 @@
         </div>
     {% else %}
         <div class="card text-center p-5">
-            <p class="text-secondary mb-0">Henüz yayınlanmış bir duyuru bulunmamaktadır.</p>
+            <p class="text-secondary mb-0">{{ _('Henüz yayınlanmış bir duyuru bulunmamaktadır.') }}</p>
         </div>
     {% endif %}
 </section>

@@ -89,6 +89,7 @@ Projede gereksiz bağımlılıklardan kaçınılarak sadece projenin temel gerek
 | **Flask-WTF** | En güncel | Form doğrulama, görsel alan yönetimi ve CSRF güvenliği. |
 | **python-dotenv** | En güncel | Hassas bilgilerin `.env` dosyasından okunması. |
 | **SQLite** | Dahili | Yerel geliştirme için hafif ve dosya tabanlı ilişkisel veritabanı. |
+| **GitHub Actions** | CI/CD | Kod değişikliklerinde testlerin otomatik koşturulması ve sürekli entegrasyon. |
 
 ---
 
@@ -220,6 +221,12 @@ Geliştirme sürecinin bir sonraki aşamalarında gerçekleştirilmesi planlanan
 
 ---
 
-## 📈 11. Sonuç ve Değerlendirme
+## 🔄 11. GitHub Actions (CI/CD) Entegrasyonu
+
+Projenin GitHub deposunda kod bütünlüğünü korumak ve kaliteyi artırmak amacıyla GitHub Actions kullanılarak Continuous Integration (Sürekli Entegrasyon) süreci kurulmuştur. Her `push` ve `pull request` işleminde proje otomatik olarak Ubuntu sunucularında ayağa kaldırılır, bağımlılıklar yüklenir ve yazılmış olan `pytest` birim testleri koşturulur. Bu sayede hatalı kodların ana dalda (main) birleşmesi önlenir.
+
+---
+
+## 📈 12. Sonuç ve Değerlendirme
 
 **GaziKampüste Yönetim Sistemi**, modern web standartlarına uygun, güvenli ve modüler bir mimariyle geliştirilmektedir. Son oturumla birlikte entegre edilen profil yönetimi, güvenli CRUD akışları, yetki kontrolleri, sayfalama sistemi ve gelişmiş test altyapısı sayesinde uygulamanın omurgası tamamlanmış ve üretime (production) hazır hale gelmiştir. Yazılan in-memory otomatik birim testleri sistemin yüksek kalitede ve hatasız çalıştığını güvence altına almaktadır. Modüler Blueprint tasarımı projenin gelecekte rahatça büyümesine imkan tanımaktadır.

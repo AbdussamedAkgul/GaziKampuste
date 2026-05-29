@@ -18,10 +18,13 @@
             <nav>
                 <a href="{{ url_for('main.index') }}" class="{% if request.blueprint == 'main' and request.endpoint == 'main.index' %}active{% endif %}">{{ _('Ana Sayfa') }}</a>
                 <a href="{{ url_for('main.menus_list') }}" class="{% if request.endpoint == 'main.menus_list' %}active{% endif %}">{{ _('Yemekhane') }}</a>
-                <a href="{{ url_for('main.announcements_list') }}" class="{% if request.endpoint == 'main.announcements_list' %}active{% endif %}">{{ _('Duyurular') }}</a>
+                <a href="{{ url_for('main.announcements_list') }}" class="{% if request.endpoint == 'main.announcements_list' %}active{% endif %}">{{ _('Haberler ve Duyurular') }}</a>
+                <a href="{{ url_for('main.schedule') }}" class="{% if request.endpoint == 'main.schedule' %}active{% endif %}">{{ _('Ders Programı') }}</a>
+                <a href="{{ url_for('main.exam_schedule') }}" class="{% if request.endpoint == 'main.exam_schedule' %}active{% endif %}">{{ _('Sınav Takvimi') }}</a>
+                <a href="{{ url_for('main.academic_calendar') }}" class="{% if request.endpoint == 'main.academic_calendar' %}active{% endif %}">{{ _('Akademik Takvim') }}</a>
                 
                 <form action="{{ url_for('main.search') }}" method="GET" class="d-flex align-items-center ms-3 me-3" style="margin-bottom: 0;">
-                    <input class="form-control form-control-sm me-2" type="search" placeholder="{{ _('Ara...') }}" aria-label="Search" name="q" value="{{ request.args.get('q', '') }}" style="border-radius: 20px;">
+                    <input class="form-control form-control-sm me-2" type="search" placeholder="{{ _('Ara...') }}" aria-label="Search" name="q" value="{{ request.args.get('q', '') }}" style="border-radius: 20px; min-width: 250px;">
                     <button class="btn btn-sm btn-outline-primary" type="submit" style="border-radius: 20px;">{{ _('Ara') }}</button>
                 </form>
 

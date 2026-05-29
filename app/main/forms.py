@@ -43,12 +43,6 @@ class CafeteriaMenuForm(FlaskForm):
     date = DateField('Tarih', format='%Y-%m-%d', validators=[
         DataRequired(message='Tarih seçilmesi zorunludur.')
     ])
-    menu_type = SelectField('Menü Tipi', choices=[
-        ('normal', 'Normal Menü'),
-        ('vegetarian', 'Vejetaryen Menü')
-    ], validators=[
-        DataRequired(message='Menü tipi seçilmesi zorunludur.')
-    ])
     soup = StringField('Çorba', validators=[
         DataRequired(message='Çorba alanı zorunludur.'),
         Length(max=100, message='Çorba adı en fazla 100 karakter olabilir.')
@@ -74,5 +68,29 @@ class AnnouncementForm(FlaskForm):
     ])
     content = TextAreaField('İçerik', validators=[
         DataRequired(message='Duyuru içeriği zorunludur.')
+    ])
+    submit = SubmitField('Kaydet')
+
+class EventForm(FlaskForm):
+    title = StringField('Etkinlik Başlığı', validators=[
+        DataRequired(message='Başlık alanı zorunludur.'),
+        Length(max=100, message='Başlık en fazla 100 karakter olabilir.')
+    ])
+    description = TextAreaField('Açıklama', validators=[
+        Optional()
+    ])
+    start_date = DateField('Başlangıç Tarihi', format='%Y-%m-%d', validators=[
+        DataRequired(message='Başlangıç tarihi zorunludur.')
+    ])
+    end_date = DateField('Bitiş Tarihi', format='%Y-%m-%d', validators=[
+        Optional()
+    ])
+    event_type = SelectField('Etkinlik Türü', choices=[
+        ('midterm', 'Vize Sınavı'),
+        ('final', 'Final Sınavı'),
+        ('school', 'Okul Etkinliği'),
+        ('club', 'Topluluk Etkinliği')
+    ], validators=[
+        DataRequired(message='Etkinlik türü seçilmesi zorunludur.')
     ])
     submit = SubmitField('Kaydet')

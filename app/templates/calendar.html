@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Etkinlik Takvimi - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">📅 Etkinlik Takvimi</h2>
+    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+        <a href="{{ url_for('main.add_event') }}" class="btn btn-primary">+ Yeni Etkinlik Ekle</a>
+    {% endif %}
+</div>
+
+<!-- Legend for event types -->
+<div class="d-flex gap-3 mb-3 justify-content-center flex-wrap">
+    <div class="d-flex align-items-center gap-2"><span style="width: 15px; height: 15px; background: #e74c3c; border-radius: 3px; display: inline-block;"></span> <span class="text-secondary">Vize</span></div>
+    <div class="d-flex align-items-center gap-2"><span style="width: 15px; height: 15px; background: #8e44ad; border-radius: 3px; display: inline-block;"></span> <span class="text-secondary">Final</span></div>
+    <div class="d-flex align-items-center gap-2"><span style="width: 15px; height: 15px; background: #3788d8; border-radius: 3px; display: inline-block;"></span> <span class="text-secondary">Okul Etkinliği</span></div>
+    <div class="d-flex align-items-center gap-2"><span style="width: 15px; height: 15px; background: #27ae60; border-radius: 3px; display: inline-block;"></span> <span class="text-secondary">Topluluk Etkinliği</span></div>
+</div>
+
+<div class="card p-4">
+    <div id='calendar'></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'tr',
+            firstDay: 1, // Pazartesi
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            buttonText: {
+                today: 'Bugün',
+                year: 'Yıl',
+                month: 'Ay',
+                week: 'Hafta',
+                day: 'Gün'
+            },
+            events: '/api/events',
+            eventClick: function(info) {
+                var deleteBtn = '';
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    var editUrl = "{{ url_for('main.calendar') }}".replace('/calendar', '') + '/event/' + info.event.id + '/edit';
+                    var deleteUrl = "{{ url_for('main.calendar') }}".replace('/calendar', '') + '/event/' + info.event.id + '/delete';
+                    deleteBtn = `
+                        <div class="mt-3 d-flex gap-2">
+                            <a href="${editUrl}" class="btn btn-sm btn-secondary">Düzenle</a>
+                            <form action="${deleteUrl}" method="POST" style="display:inline;" onsubmit="return confirm('Bu etkinliği silmek istediğinize emin misiniz?');">
+                                {{ delete_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                            </form>
+                        </div>
+                    `;
+                {% endif %}
+                
+                // Show custom modal/alert or simple JS prompt
+                var details = info.event.extendedProps.description ? '\nDetay: ' + info.event.extendedProps.description : '';
+                
+                // For simplicity, using a small bootstrap modal logic here if we wanted to, 
+                // but since we can't inject DOM elements easily without a pre-built modal,
+                // we'll use a standard alert for student, and redirect for admin?
+                // Let's create a dynamic modal!
+                
+                var modalHtml = `
+                <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1);">
+                      <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" style="color: ${info.event.backgroundColor}">${info.event.title}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-secondary">
+                        <p><strong>Tarih:</strong> ${info.event.start.toLocaleDateString('tr-TR')} ${info.event.end ? ' - ' + new Date(info.event.end.getTime() - 1000).toLocaleDateString('tr-TR') : ''}</p>
+                        ${info.event.extendedProps.description ? '<p>' + info.event.extendedProps.description + '</p>' : ''}
+                        ${deleteBtn}
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+                
+                var oldModal = document.getElementById('eventModal');
+                if(oldModal) { oldModal.remove(); }
+                document.body.insertAdjacentHTML('beforeend', modalHtml);
+                var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                myModal.show();
+            }
+        });
+        calendar.render();
+    });
+</script>
+
+<style>
+/* Fullcalendar Custom Styles */
+#calendar {
+    color: var(--text-primary);
+}
+.fc-theme-standard td, .fc-theme-standard th {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.fc-button-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--bg-dark) !important;
+}
+.fc-button-primary:hover {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.fc .fc-daygrid-day-number {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.fc-day-today {
+    background-color: rgba(0, 242, 254, 0.05) !important;
+}
+.fc-event {
+    cursor: pointer;
+    border: none !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+</style>
+{% endblock %}

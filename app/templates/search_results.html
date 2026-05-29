@@ -1,59 +1,101 @@
 {% extends "base.html" %}
 
-{% block title %}Arama Sonuçları - GaziKampüste{% endblock %}
+{% block title %}{{ _('Arama Sonuçları') }} - GaziKampüste{% endblock %}
 
 {% block content %}
-<div class="row mt-4">
+<div class="row mt-4 mb-4">
     <div class="col-12">
-        <h2 class="mb-4">"{{ query }}" için Arama Sonuçları</h2>
+        <h2 class="section-title mb-4">"{{ query }}" {{ _('İçin Arama Sonuçları') }}</h2>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <h4 class="mb-3">Bulunan Duyurular <span class="badge bg-primary rounded-pill">{{ announcements|length }}</span></h4>
+<div class="grid-container">
+    <!-- Diğer Sayfalar -->
+    {% if static_results %}
+    <div class="search-category-col">
+        <h4 class="mb-3 d-flex align-items-center gap-2" style="color: var(--accent-color);">
+            <i class="fas fa-file-alt"></i> {{ _('İlgili Sayfalar') }} 
+            <span class="badge" style="background-color: var(--accent-color); color: var(--bg-dark);">{{ static_results|length }}</span>
+        </h4>
+        <div class="d-flex flex-column gap-3">
+            {% for page in static_results %}
+                <a href="{{ page.url }}" class="card text-decoration-none" style="display: block; padding: 15px;">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" style="color: #ffffff;">{{ page.title }}</h5>
+                    </div>
+                    <p class="mb-0 text-secondary" style="font-size: 14px;">{{ page.description }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Duyurular -->
+    <div class="search-category-col">
+        <h4 class="mb-3 d-flex align-items-center gap-2" style="color: #63b3ed;">
+            <i class="fas fa-bullhorn"></i> {{ _('Duyurular') }}
+            <span class="badge" style="background-color: #63b3ed; color: var(--bg-dark);">{{ announcements|length }}</span>
+        </h4>
         {% if announcements %}
-            <div class="list-group">
+            <div class="d-flex flex-column gap-3">
                 {% for announcement in announcements %}
-                    <a href="{{ url_for('main.announcements_list') }}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1 text-primary">{{ announcement.title }}</h5>
-                            <small class="text-muted">{{ announcement.date.strftime('%d.%m.%Y') }}</small>
+                    <a href="{{ url_for('main.announcements_list') }}" class="card text-decoration-none" style="display: block; padding: 15px;">
+                        <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0" style="color: #ffffff; font-size: 16px;">{{ announcement.title }}</h5>
+                            <small class="text-secondary">{{ announcement.date.strftime('%d.%m.%Y') }}</small>
                         </div>
-                        <p class="mb-1 text-truncate">{{ announcement.content }}</p>
-                        <small class="text-muted">Yazar: {{ announcement.author.username }}</small>
+                        <!-- strip_tags kullanılarak html etiketleri arındırılır -->
+                        <p class="mb-2 text-secondary text-truncate" style="font-size: 14px; max-width: 100%;">{{ announcement.content | striptags }}</p>
+                        <small class="text-secondary" style="font-size: 12px;">{{ _('Yazar:') }} {{ announcement.author.username }}</small>
                     </a>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">Eşleşen duyuru bulunamadı.</p>
+            <div class="card p-3 text-center">
+                <p class="text-secondary mb-0">{{ _('Eşleşen duyuru bulunamadı.') }}</p>
+            </div>
         {% endif %}
     </div>
 
-    <div class="col-md-6 mb-4">
-        <h4 class="mb-3">Bulunan Menüler <span class="badge bg-success rounded-pill">{{ menus|length }}</span></h4>
+    <!-- Menüler -->
+    <div class="search-category-col">
+        <h4 class="mb-3 d-flex align-items-center gap-2" style="color: #81e6d9;">
+            <i class="fas fa-utensils"></i> {{ _('Yemek Menüleri') }}
+            <span class="badge" style="background-color: #81e6d9; color: var(--bg-dark);">{{ menus|length }}</span>
+        </h4>
         {% if menus %}
-            <div class="list-group">
+            <div class="d-flex flex-column gap-3">
                 {% for menu in menus %}
-                    <div class="list-group-item">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1 text-success">{{ menu.date.strftime('%d.%m.%Y') }} Menüsü</h5>
-                            <small class="text-muted">{{ menu.menu_type|capitalize }}</small>
+                    <div class="card" style="padding: 15px;">
+                        <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0" style="color: #ffffff; font-size: 16px;">{{ menu.date.strftime('%d.%m.%Y') }} {{ _('Menüsü') }}</h5>
                         </div>
-                        <p class="mb-1">
-                            <strong>Çorba:</strong> {{ menu.soup }}<br>
-                            <strong>Ana Yemek:</strong> {{ menu.main_dish }}<br>
-                            <strong>Yan Lezzet:</strong> {{ menu.side_dish }}
-                        </p>
-                        {% if menu.calories %}
-                            <small class="text-muted">{{ menu.calories }} kcal</small>
-                        {% endif %}
+                        <ul class="list-unstyled mb-0" style="font-size: 14px;">
+                            <li class="mb-1"><strong style="color: var(--accent-color);">{{ _('Çorba:') }}</strong> {{ menu.soup }}</li>
+                            <li class="mb-1"><strong style="color: var(--accent-color);">{{ _('Ana Yemek:') }}</strong> {{ menu.main_dish }}</li>
+                            <li class="mb-1"><strong style="color: var(--accent-color);">{{ _('Yan Lezzet:') }}</strong> {{ menu.side_dish }}</li>
+                        </ul>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-muted">Eşleşen menü bulunamadı.</p>
+            <div class="card p-3 text-center">
+                <p class="text-secondary mb-0">{{ _('Eşleşen menü bulunamadı.') }}</p>
+            </div>
         {% endif %}
     </div>
 </div>
+
+<style>
+/* Izgara düzeninin her sütununu esnek yapar */
+.search-category-col {
+    display: flex;
+    flex-direction: column;
+}
+.card.text-decoration-none:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+</style>
 {% endblock %}

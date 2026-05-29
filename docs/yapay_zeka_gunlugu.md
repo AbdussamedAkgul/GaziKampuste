@@ -223,3 +223,21 @@ Projenin üretime (production) hazır hale getirilmesi için test altyapısını
 * Uygulamanın üretime alınmadan önce "in-memory" (hafızada) izole bir veritabanı ile nasıl güvenle test edileceğini (Pytest & Flask-Testing) öğrendim.
 * Arayüzdeki (Grid sistemi) mobil taşma (overflow) sorunlarını CSS fonksiyonları (`min()`) ile çözmeyi kavradım.
 * Uygulama çapındaki hata sayfalarının (404/500) tasarım bütünlüğünün kullanıcı deneyimine (UX) etkisini gözlemledim.
+
+---
+
+### 📅 Günlük Kaydı: 29 Mayıs 2026 (7. Oturum)
+
+#### 🎯 Yapılan İş / Hedef:
+Projenin GitHub ile entegrasyonu, Sürekli Entegrasyon (CI) sürecinin GitHub Actions ile kurulması ve proje dokümantasyonlarının (Proje Raporu, AI Günlüğü, README) güncellenmesi.
+
+#### 💬 Yapay Zekaya Gönderilen İstem (Prompt):
+> "bunu githuba entegre et proje raporu yapayzeka günlüğü ve readme kısmını güncelle"
+
+#### 🤖 Yapay Zekanın Katkısı / Çözümü:
+1. **GitHub Actions (CI) Kurulumu**: Proje dizinine `.github/workflows/python-app.yml` dosyası eklendi. Böylece her push ve pull request işleminde projenin bağımlılıkları yüklenip `pytest` otomatik olarak çalıştırılacak şekilde ayarlandı.
+2. **README Güncellemesi**: CI sürecinin durumunu gösteren bir Badge (rozet) eklendi ve kullanılan teknolojiler kısmına GitHub Actions dahil edildi.
+3. **Proje Raporu Güncellemesi**: Raporun ilgili bölümlerine CI/CD süreçleri detaylandırılarak yeni bir başlık halinde eklendi.
+
+#### 💡 Kazanım:
+* Geliştirilen projenin GitHub ekosistemiyle nasıl bütünleştirildiğini ve GitHub Actions ile Sürekli Entegrasyon (Continuous Integration) adımlarının otomatikleştirilmesini deneyimledim.

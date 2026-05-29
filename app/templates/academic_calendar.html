@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Akademik Takvim - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">📅 {{ _('Akademik Takvim') }}</h2>
+</div>
+
+<div class="card p-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center" style="color: var(--text-primary); border-color: rgba(255,255,255,0.1);">
+            <thead style="background: rgba(255,255,255,0.05);">
+                <tr>
+                    <th style="width: 50%;">{{ _('Faaliyet') }}</th>
+                    <th style="width: 50%;">{{ _('Tarih') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Güz Dönemi -->
+                <tr style="background: rgba(255,255,255,0.1) !important;">
+                    <td colspan="2" class="text-start fw-bold text-white">🍂 {{ _('2025-2026 Güz Yarıyılı') }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Derslerin Başlaması') }}</td>
+                    <td>22 Eylül 2025</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Derslerin Sona Ermesi') }}</td>
+                    <td>29 Aralık 2025</td>
+                </tr>
+
+                <!-- Bahar Dönemi -->
+                <tr style="background: rgba(255,255,255,0.1) !important;">
+                    <td colspan="2" class="text-start fw-bold text-white">🌸 {{ _('2025-2026 Bahar Yarıyılı') }}</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Derslerin Başlaması') }}</td>
+                    <td>9 Şubat 2026</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Ara Sınavlar (Vize)') }}</td>
+                    <td>6-10 Nisan 2026</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Bahar Yarıyılı Ders Bitişi') }}</td>
+                    <td>22 Mayıs 2026</td>
+                </tr>
+                <tr>
+                    <td class="text-start">{{ _('Yarıyıl Sonu Sınavları (Final)') }}</td>
+                    <td>1-14 Haziran 2026</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.table td, .table th {
+    background-color: transparent;
+    color: var(--text-primary) !important;
+}
+.table-hover tbody tr:hover td {
+    background-color: rgba(255,255,255,0.05);
+}
+</style>
+{% endblock %}

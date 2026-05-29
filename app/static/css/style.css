@@ -275,10 +275,12 @@ main {
 }
 
 .menu-items li {
-    padding: 6px 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
 }
 
 .menu-items li:last-child {
@@ -286,12 +288,18 @@ main {
 }
 
 .menu-label {
-    color: var(--text-secondary);
-    font-size: 14px;
+    color: var(--accent-color) !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .menu-val {
     font-weight: 500;
+    font-size: 16px;
+    text-align: left !important;
+    line-height: 1.4;
 }
 
 .calories-box {
@@ -324,6 +332,16 @@ main {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.announcement-content * {
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+.announcement-content a {
+    color: var(--accent-color) !important;
+    text-decoration: underline !important;
 }
 
 .card-footer {
@@ -587,5 +605,48 @@ footer span {
 
 .w-100 {
     width: 100% !important;
+}
+
+/* ==========================================
+   Dropdown (Açılır Menü) Karanlık Tema
+   ========================================== */
+.dropdown-menu {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-item {
+    color: #ffffff !important;
+    transition: var(--transition);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent-color) !important;
+}
+
+/* ==========================================
+   Genel Metin Beyazlaştırma Koruması
+   ========================================== */
+body, p, span, div, h1, h2, h3, h4, h5, h6, li, td, th {
+    color: #ffffff !important;
+}
+
+/* Yalnızca altın sarısı (veya özel) renkli olan buton yazıları hariç */
+.btn-login, .btn-primary {
+    color: var(--bg-dark) !important;
+}
+.tag-veg {
+    color: var(--success-color) !important;
+}
+.tag-normal {
+    color: #90cdf4 !important;
+}
+.btn-danger, .alert-danger, .invalid-feedback {
+    color: #feb2b2 !important;
+}
+.logo-text span {
+    color: var(--accent-color) !important;
 }
 

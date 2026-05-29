@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Sınav Takvimi') }} - GaziKampüste Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">📝 {{ _('Sınav Takvimi') }}</h2>
+</div>
+
+<div class="card p-4">
+    <h4 class="text-center mb-4 text-white" style="font-weight: 600;">
+        {{ _('2025-2026 EĞİTİM ÖĞRETİM YILI BAHAR DÖNEMİ BİLİŞİM GÜVENLİĞİ FİNAL SINAV PROGRAMI') }}
+    </h4>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle exam-table" style="color: var(--text-primary); border-color: rgba(255,255,255,0.2); min-width: 1200px; font-size: 12px;">
+            <thead style="background: rgba(255,255,255,0.1);">
+                <tr>
+                    <th rowspan="2" class="align-middle" style="width: 8%;">Saat</th>
+                    <th colspan="2">01.06.2026 PAZARTESİ</th>
+                    <th colspan="2">02.06.2026 SALI</th>
+                    <th colspan="2">03.06.2026 ÇARŞAMBA</th>
+                    <th colspan="2">04.06.2026 PERŞEMBE</th>
+                    <th colspan="2">05.06.2026 CUMA</th>
+                </tr>
+                <tr style="background: rgba(255,255,255,0.05);">
+                    <th>1. SINIF</th>
+                    <th>2. SINIF</th>
+                    <th>1. SINIF</th>
+                    <th>2. SINIF</th>
+                    <th>1. SINIF</th>
+                    <th>2. SINIF</th>
+                    <th>1. SINIF</th>
+                    <th>2. SINIF</th>
+                    <th>1. SINIF</th>
+                    <th>2. SINIF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 10:00 - 10:30 -->
+                <tr>
+                    <td class="fw-bold">10:00-10:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-gray-cell text-dark fw-bold">
+                        ENG102 İNGİLİZCE 2<br>SYP +4<br>VY,NEA,MH,MAS<br>103,104,105,106
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="8" class="bg-beige-cell text-dark fw-bold">
+                        BLG240 İŞLETMEDE<br>MESLEKİ EĞİTİM<br>MAS,MK,CY<br>SEMİNER SALONU
+                    </td>
+                </tr>
+                <!-- 10:30 - 11:00 -->
+                <tr>
+                    <td class="fw-bold">10:30-11:00</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Per 1 is covered -->
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 is covered -->
+                </tr>
+                <!-- 11:00 - 11:30 -->
+                <tr>
+                    <td class="fw-bold">11:00-11:30</td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        BLG222 SIZMA TESTİ<br>VE ZARARLI YAZILIM<br>ANALİZİ OST +1 UY<br>105,106
+                    </td>
+                    <td rowspan="2" class="bg-lightgray-cell text-dark fw-bold">
+                        TUR102 TÜRK DİLİ II<br>NK +4 KA,UY,MKA,OST<br>103,104,105,106
+                    </td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        MOS103 İŞLETME<br>YÖNETİMİ NEA +1<br>MKA 103,104
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        MAT102<br>MATEMATİK VE<br>MANTIK YY +1 MH<br>106,107
+                    </td>
+                    <!-- Cuma 2 is covered -->
+                </tr>
+                <!-- 11:30 - 12:00 -->
+                <tr>
+                    <td class="fw-bold">11:30-12:00</td>
+                    <td></td>
+                    <!-- Pzt 2 covered -->
+                    <!-- Salı 1 covered -->
+                    <td></td>
+                    <!-- Çar 1 covered -->
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-gray-cell text-dark fw-bold">
+                        ENG202 İNGİLİZCE 4<br>GT +4 VY,NEA,MH,MAS<br>103,104,105,106
+                    </td>
+                    <!-- Cuma 1 covered -->
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 12:00 - 12:30 -->
+                <tr>
+                    <td class="fw-bold">12:00-12:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Per 2 covered -->
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 12:30 - 13:00 -->
+                <tr>
+                    <td class="fw-bold">12:30-13:00</td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        BLG104<br>SANALLAŞTIRMA VE<br>BULUT BİLİŞİM<br>SİSTEMLERİ OST +1<br>UY 105,106
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-lightgray-cell text-dark fw-bold">
+                        BLG208 GÜVENLİ<br>YAZILIM GELİŞTİRME<br>KA +1 MKA 105,106
+                    </td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        MOS109 YÖNETİM<br>BİLİŞİM SİSTEMLERİ<br>NEA +1 KA 103,104
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 13:00 - 13:30 -->
+                <tr>
+                    <td class="fw-bold">13:00-13:30</td>
+                    <!-- Pzt 1 covered -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Çar 1 covered -->
+                    <!-- Çar 2 covered -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 13:30 - 14:00 -->
+                <tr>
+                    <td class="fw-bold">13:30-14:00</td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        BLG110 VERİ TABANI<br>TEMELLERİ MKA +1<br>OST 106,107
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        MOS113 KALİTE<br>GÜVENCE VE<br>STANDARTLARI YY<br>106
+                    </td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 14:00 - 14:30 -->
+                <tr>
+                    <td class="fw-bold">14:00-14:30</td>
+                    <td></td>
+                    <td></td>
+                    <!-- Salı 1 covered -->
+                    <td></td>
+                    <td rowspan="2" class="bg-lightgray-cell text-dark fw-bold">
+                        TAR102 ATATÜRK İLK.<br>VE İNK. TARİHİ-II<br>MAB +3 MKA,NEA,KA<br>103,104,105,106
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 1 covered -->
+                    <td></td> <!-- BLG240 14:00'da bitiyor, yeni BLG240 14:30'da başlıyor -->
+                </tr>
+                <!-- 14:30 - 15:00 -->
+                <tr>
+                    <td class="fw-bold">14:30-15:00</td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2" class="bg-blue-cell text-white fw-bold">
+                        BLG102 NESNE<br>TABANLI<br>PROGRAMLAMA MKA<br>+1 KA 106,107
+                    </td>
+                    <td></td>
+                    <!-- Çar 1 covered -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="5" class="bg-beige-cell text-dark fw-bold">
+                        BLG240 İŞLETMEDE<br>MESLEKİ EĞİTİM<br>MAS,MK,CY<br>SEMİNER SALONU
+                    </td>
+                </tr>
+                <!-- 15:00 - 15:30 -->
+                <tr>
+                    <td class="fw-bold">15:00-15:30</td>
+                    <td></td>
+                    <td></td>
+                    <!-- Salı 1 covered -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 15:30 - 16:00 -->
+                <tr>
+                    <td class="fw-bold">15:30-16:00</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 16:00 - 16:30 -->
+                <tr>
+                    <td class="fw-bold">16:00-16:30</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+                <!-- 16:30 - 17:00 -->
+                <tr>
+                    <td class="fw-bold">16:30-17:00</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!-- Cuma 2 covered -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="row mt-4 px-2">
+        <!-- JE/ÖDEV DERSLERİ -->
+        <div class="col-md-5 mb-3">
+            <div class="card p-3 h-100" style="background: rgba(255,255,255,0.02); border: 2px solid rgba(255,255,255,0.1);">
+                <h6 class="fw-bold" style="text-decoration: underline;">PROJE/ÖDEV DERSLERİ:</h6>
+                <ul class="list-unstyled mb-0" style="font-size: 12px; line-height: 1.8;">
+                    <li><strong>BLG106</strong> İNTERNET PROGRAMCILIĞI-I İE (PROJE SON TESLİM TAR: 01.06.2026)</li>
+                    <li><strong>MS116</strong> SİSTEM ANALİZİ VE TASARIMI MAS (PROJE SON TESLİM TAR: 05.06.2026)</li>
+                    <li><strong>MS122</strong> DİJİTAL İÇERİK YÖNETİMİ MH (PROJE SON TESLİM TAR: 05.06.2026)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- EĞİTMEN KODLARI -->
+        <div class="col-md-7 mb-3">
+            <div class="card p-3 h-100" style="background: rgba(255,255,255,0.02); border: 2px solid rgba(255,255,255,0.1);">
+                <div class="row" style="font-size: 11px; line-height: 1.8;">
+                    <div class="col-sm-4">
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>CY-</strong>İBRAHİM CİHAN YEKA</li>
+                            <li><strong>MK-</strong>MAHMUT KASAP</li>
+                            <li><strong>MKA-</strong>MERVE KORKMAZ</li>
+                            <li><strong>OST-</strong>ONUR SAMİ TUR...</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>KB-</strong>KUBİLAY AYTURAN</li>
+                            <li><strong>MAS-</strong>MEHMET ALİ SARI</li>
+                            <li><strong>MH-</strong>MEHMET HÜR</li>
+                            <li><strong>İE-</strong>İBRAHİM EDİZ</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>NEA-</strong>NAZİK ERDAL AK...</li>
+                            <li><strong>UY-</strong>UĞUR YILDIRIM</li>
+                            <li><strong>YY-</strong>YASİN YÜKSEL</li>
+                            <li><strong>SYP-</strong>SEVDA YAMAN POLAT</li>
+                            <li><strong>GT-</strong>GÜLNİHAL TOKLU</li>
+                            <li><strong>MAB-</strong>MEHMET AKİF BAL</li>
+                            <li><strong>NK-</strong>NİHAL KARAKURT</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Custom Table Theme */
+.exam-table {
+    --bs-table-bg: transparent;
+    background-color: transparent !important;
+}
+.exam-table th {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.exam-table td {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.exam-table td:not([class*="bg-"]) {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: #ffffff !important;
+}
+
+/* Custom Cell Backgrounds matching the image */
+.bg-blue-cell {
+    background-color: rgba(43, 155, 228, 0.9) !important;
+}
+.bg-gray-cell {
+    background-color: #d1d5db !important;
+}
+.bg-lightgray-cell {
+    background-color: #e5e7eb !important;
+}
+.bg-beige-cell {
+    background-color: #f3e8d6 !important;
+}
+
+/* Ensure text color is preserved on specific backgrounds even if global override is present */
+.bg-gray-cell, .bg-gray-cell *, 
+.bg-lightgray-cell, .bg-lightgray-cell *, 
+.bg-beige-cell, .bg-beige-cell * {
+    color: var(--bg-dark) !important; /* Navy-ish text for light backgrounds */
+}
+.bg-blue-cell, .bg-blue-cell * {
+    color: #ffffff !important; /* White text for blue backgrounds */
+}
+
+.exam-table td {
+    padding: 6px !important;
+}
+
+/* Scrollbar styling for horizontal overflow */
+.table-responsive::-webkit-scrollbar {
+    height: 10px;
+}
+.table-responsive::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05); 
+    border-radius: 5px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--accent-color); 
+    border-radius: 5px;
+}
+</style>
+{% endblock %}

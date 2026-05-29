@@ -1,5 +1,7 @@
 # GaziKampüste
 
+![CI](https://github.com/AbdussamedAkgul/GaziKampuste/actions/workflows/python-app.yml/badge.svg)
+
 Bu proje, **Gazi Üniversitesi TUSAŞ Kazan Meslek Yüksekokulu İnternet Programcılığı** dersi dönem projesi kapsamında geliştirilen bir web uygulamasıdır. Sistem; öğrencilerin yemekhane menüleri, ders programları ve duyurulara erişebileceği bir platformun yönetim ve bilgi panelini (GaziKampüste Yönetim Sistemi) oluşturur.
 
 ## 🚀 Proje Mimarisi: Application Factory Pattern & Blueprints
@@ -101,6 +103,7 @@ Projede sadece aşağıda belirtilen temel kütüphaneler kullanılmıştır:
 * **Flask-WTF**: Güvenli form işlemleri ve CSRF koruması
 * **python-dotenv**: `.env` dosyasındaki çevre değişkenlerinin yönetimi
 * **SQLite**: Hafif ve taşınabilir yerel veritabanı
+* **GitHub Actions**: Sürekli Entegrasyon (CI) ve otomatik test süreçleri
 
 ---
 
@@ -156,3 +159,23 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
    python run.py
    ```
    Uygulama varsayılan olarak `http://127.0.0.1:5000` adresinde çalışmaya başlayacaktır.
+
+---
+
+## 🌐 Canlıya Alma (Render Deployment)
+
+Bu uygulama [Render](https://render.com/) üzerinde yayına alınmak üzere hazır hale getirilmiştir. Sistem, üretim (production) aşamasında Gunicorn web sunucusunu ve PostgreSQL veritabanını kullanacak şekilde yapılandırılmıştır.
+
+**Dağıtım Adımları:**
+1. Render üzerinde yeni bir **Web Service** oluşturun ve GitHub deponuzu bağlayın.
+2. Web Service ayarlarını şu şekilde yapılandırın:
+   * **Environment:** Python
+   * **Build Command:** `pip install -r requirements.txt`
+   * **Start Command:** `gunicorn run:app`
+   * *(Procfile kullanılıyorsa Start Command kısmını boş bırakabilirsiniz, Render otomatik algılayacaktır).*
+3. Web Service'e bağlı bir **PostgreSQL** veritabanı oluşturun.
+4. Render Web Service kontrol panelinden **Environment Variables** bölümüne gidip şu değişkenleri ekleyin:
+   * `SECRET_KEY` (Rastgele güvenli bir dizi girin)
+   * `DATABASE_URL` (Oluşturduğunuz PostgreSQL'in Internal veya External URL'si)
+   *(Not: Uygulama içindeki yapılandırma, Render'ın verdiği `postgres://` formatını otomatik olarak `postgresql://` standardına çevirir).*
+5. Uygulama yüklendikten (deploy) sonra arayüz üzerinden veya Render shell üzerinden ilk tablo yapılandırması (migration/db.create_all) komutunu çalıştırabilirsiniz.

@@ -17,7 +17,7 @@
             {{ form.hidden_tag() }}
             
             <div class="row">
-                <div class="col-md-6 form-group">
+                <div class="col-md-12 form-group">
                     {{ form.date.label(class="form-label") }}
                     {% if form.date.errors %}
                         {{ form.date(class="form-control is-invalid", type="date") }}
@@ -28,20 +28,6 @@
                         </div>
                     {% else %}
                         {{ form.date(class="form-control", type="date") }}
-                    {% endif %}
-                </div>
-                
-                <div class="col-md-6 form-group">
-                    {{ form.menu_type.label(class="form-label") }}
-                    {% if form.menu_type.errors %}
-                        {{ form.menu_type(class="form-select form-control is-invalid", style="background-color: rgba(255,255,255,0.04); border-color: var(--border-color); color: var(--text-primary);") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.menu_type.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.menu_type(class="form-select form-control", style="background-color: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color) !important; color: var(--text-primary) !important;") }}
                     {% endif %}
                 </div>
             </div>
